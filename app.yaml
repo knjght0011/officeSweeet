@@ -1,0 +1,99 @@
+env: flex
+runtime: custom
+api_version:    1
+
+resources:
+    cpu: .5
+    memory_gb: 0.9
+    disk_size_gb: 10
+
+runtime_config:
+  document_root: public
+  
+beta_settings:
+    cloud_sql_instances: "single-quanta-158320:us-east1:officesweeet-test"
+    
+#resources:
+#  cpu: .5
+#  memory_gb: 0.18
+#  disk_size_gb: 10
+    
+handlers:
+        - url: /favicon\.ico
+          static_files: public/favicon.ico
+          upload: public/favicon\.ico
+          secure: always
+
+        - url: /build
+          static_dir: public/build
+          application_readable: true
+          secure: always
+
+        - url: /images
+          static_dir: public/images
+          secure: always
+
+        - url: /includes
+          static_dir: public/includes
+          secure: always
+
+        - url: /.*
+          script: public/index.php
+
+
+
+skip_files:
+        - ^(.*/)?#.*#$
+        - ^(.*/)?.*~$
+        - ^(.*/)?.*\.py[co]$
+        - ^(.*/)?.*/RCS/.*$
+        - ^(.*/)?\.(?!env).*$
+        - ^(.*/)?node_modules.*$
+        - ^(.*/)?_ide_helper\.php$
+        - ^(.*/)?\.DS_Store$
+        - ^.git
+        - ^.vendor
+        - ^.idea
+        - ^ftp
+        - ^nbproject
+
+env_variables:
+  APP_ENV: appengine
+  APP_LOG: errorlog
+  STORAGE_DIR: /tmp
+  CACHE_DRIVER: database
+  SESSION_DRIVER: database 
+  CLOUDSDK_CORE_PROJECT: single-quanta-158320
+  
+  DB_DATABASE: management
+  DB_PORT: 3306
+  DB_USERNAME: management
+  DB_PASSWORD: G1YuqoBEmIlIS2bI8AKaY5Go4e2imu
+
+  SUBDOMAIN_DB_PORT: 3306
+  SUBDOMAIN_DB_DATABASE: officesweeet
+  SUBDOMAIN_DB_USERNAME: lls
+  SUBDOMAIN_DB_PASSWORD: j2GeHiD657naX1fi1E7eLi8oJACa8I
+  
+  DB_SOCKET: /cloudsql/single-quanta-158320:us-east1:officesweeet-test
+  DB_LOG_CONNECTION: subdomain
+  SENTRY_DSN: https://24467537b1fc4445bd8f8d1596052458:0e95e20f752d4709ad1c8732757ba07a@sentry.io/286040
+
+  GOOGLE_APPLICATION_NAME: "Office Sweeet"
+  GOOGLE_CLIENT_ID: 1029785995201-gt3d0hb541qllfh3ma151s5e3rka2i6p.apps.googleusercontent.com
+  GOOGLE_CLIENT_SECRET: nep6vJgr02En21sfFFAuX0d-
+  GOOGLE_DEVELOPER_KEY: AIzaSyB_NR3OW8oaQsetpqVvWD_3yDHITSVsFSQ
+
+  BROADCAST_DRIVER: pusher
+  PUSHER_APP_ID: 538864
+  PUSHER_APP_KEY: 433d9d443bf08a679fc9
+  PUSHER_APP_SECRET: f95633e24af26099a751
+  PUSHER_CLUSTER: mt1
+  SNAPPY_PDF_LOCATION: vendor/h4cc/wkhtmltopdf-amd64/bin/wkhtmltopdf-amd64
+
+  MAILGUN_DOMAIN: officesweeet.com
+  MAILGUN_PRIVATE: key-6c0877e58c956c264928ba795e6de19d
+  MAILGUN_PUBLIC: key-6c0877e58c956c264928ba795e6de19d
+  MAILGUN_FROM_ADDRESS: noreply@officesweeet.com
+  MAILGUN_FROM_NAME: noreply@officesweeet.com
+  MAILGUN_REPLY_TO: noreply@officesweeet.com

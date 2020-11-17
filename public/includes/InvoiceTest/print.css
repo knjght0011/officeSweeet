@@ -1,0 +1,12 @@
+#hiderow,
+.delete {
+  display: none;
+}
+
+.controls {
+  display: none;
+}
+
+.deletecol{
+  display: none;
+}

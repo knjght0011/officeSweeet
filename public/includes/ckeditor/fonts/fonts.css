@@ -1,0 +1,4 @@
+@font-face {
+    font-family: "Mellony Dry Brush";
+    src: local("Mellony Dry Brush"), url("/includes/ckeditor/fonts/mellony dry brush.ttf") format("truetype"); /*non-IE*/
+}

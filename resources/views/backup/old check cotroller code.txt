@@ -1,0 +1,160 @@
+
+    
+    #below have been replaced
+    public function ShowVendorCheckForm($id)
+    {
+        $vendor_id = intval($id);
+        if ($vendor_id !== 0) {
+            
+            $vendor = Vendor::where('id', $vendor_id)
+                ->with('address')
+                ->first();
+            
+            $branches = Branch::all();
+            $ExpenseAccountCategorys = ExpenseAccountCategory::with('subcategories')->orderBy('category','ASC')->get();
+            
+            $currency = "$";
+            
+            return View::make('Vendors.check')
+                ->with('vendor', $vendor)
+                ->with('branches', $branches)
+                ->with('currency', $currency)
+                ->with('ExpenseAccountCategorys', $ExpenseAccountCategorys);
+            
+        } else {
+            return $this->Error('invalid vendor id', $vendor_id);
+        }
+    }
+    
+    public function ShowClientCheckForm($id)
+    {
+        $client_id = intval($id);
+        if ($client_id !== 0) {
+            
+            $client = Client::where('id', $client_id)
+                ->with('address')
+                ->first();
+            
+            $branches = Branch::all();
+            $ExpenseAccountCategorys = ExpenseAccountCategory::with('subcategories')->orderBy('category','ASC')->get();
+            
+            $currency = "$";
+            
+            return View::make('Clients.check')
+                ->with('client', $client)
+                ->with('branches', $branches)
+                ->with('currency', $currency)
+                ->with('ExpenseAccountCategorys', $ExpenseAccountCategorys);
+            
+        } else {
+            return $this->Error('invalid client id', $client_id);
+        }
+    }
+    
+    public function ShowEditVendorCheckForm($id)
+    {
+        $check_id = intval($id);
+        if ($check_id !== 0) {
+            
+            $check = Check::where('id', $check_id)
+                ->with('vendor')
+                ->first();
+            
+            $vendor = Vendor::where('id', $check->vendor_id)
+                ->with('address')
+                ->first();
+            
+            $branches = Branch::all();
+            $ExpenseAccountCategorys = ExpenseAccountCategory::with('subcategories')->orderBy('category','ASC')->get();
+            
+            $currency = "$";
+            
+            return View::make('Vendors.check')
+                ->with('vendor', $vendor)
+                ->with('check', $check)
+                ->with('branches', $branches)
+                ->with('currency', $currency)
+                ->with('ExpenseAccountCategorys', $ExpenseAccountCategorys);
+            
+        } else {
+            return $this->Error('invalid check id', $check_id);
+        }
+    }
+    
+    public function SaveVendorCheck()
+    {
+                //retrieve data
+        $checkdata = array(
+            'id' => Input::get('id'),
+            'vendor_id' => Input::get('vendor_id'),
+            'payto' => Input::get('payto'),
+            'date' => Input::get('date'),
+            'checknumber' => Input::get('checknumber'),
+            'memo' => Input::get('memo'),
+            'amount' => Input::get('amount'),
+            'catagorys' => Input::get('catagorys'),
+        );
+        
+        if($checkdata['catagorys'] == null){
+            $checkdata['catagorys'] = "";
+        }
+        
+        //validate data
+        //$validator = $this->ValidateNewQuoteInput($quotedata , $tabledata);
+        
+        $valid = true;
+        $errors = array();
+        /*foreach($validator as $v)
+        {
+            if ($v->fails()){
+                $valid = false;
+                foreach ($v->errors()->toArray() as $error)
+                {
+                    array_push($errors, $error);
+                }
+            }
+        }*/
+        
+        if ($valid == false){
+            
+            return $errors;
+            
+        } else {
+            
+            if ($checkdata['id'] == 0)
+            {   //brand new quote make new records for everything
+                
+                $check = new Check;
+                $check->id = $checkdata['id'];
+                $check->payto = $checkdata['payto'];
+                $check->vendor_id = $checkdata['vendor_id'];
+                $check->date = $checkdata['date'];
+                $check->checknumber = $checkdata['checknumber'];
+                $check->memo = $checkdata['memo'];            
+                $check->amount = $checkdata['amount'];
+                $check->catagorys = $checkdata['catagorys'];
+                $check->save();
+
+                EventLog::add('New check created ID:'.$check->id.' for client ID:'.$check->client_id);
+                                
+                return $check->id;
+                
+            }else{
+                
+                $check = Check::find($checkdata['id']);  
+                $check->id = $checkdata['id'];
+                $check->payto = $checkdata['payto'];
+                $check->vendor_id = $checkdata['vendor_id'];
+                $check->date = $checkdata['date'];
+                $check->checknumber = $checkdata['checknumber'];
+                $check->memo = $checkdata['memo'];            
+                $check->amount = $checkdata['amount'];
+                $check->catagorys = $checkdata['catagorys'];
+                $check->save();
+
+                EventLog::add('Updated check ID:'.$check->id.' for check ID:'.$check->client_id);           
+                                
+                return $check->id;
+            }
+        }
+    }

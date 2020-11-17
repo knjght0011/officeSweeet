@@ -1,0 +1,531 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 26-Apr-2016, 21:39:39
+    Author     : McGreeb
+*/
+
+/* Start by setting display:none to make this hidden.
+   Then we position it in relation to the viewport window
+   with position:fixed. Width, height, top and left speak
+   for themselves. Background we set to 80% white with
+   our animation centered, and no-repeating */
+
+
+.CheckShiftingButtons{
+    width:135px;
+    height:90px;
+}
+
+.CheckShiftingButtonsSub{
+    width:45px;
+    height:41px;
+    float: left;
+}
+
+.MoveAllLabel{
+    text-align:center;
+}
+
+
+.ui-widget-content .ui-icon {
+    background-image: url("../../images/ui-icons_444444_256x240.png")      
+!important;}
+.ui-widget-header .ui-icon {
+    background-image: url("../../images/ui-icons_444444_256x240.png")   
+!important;}
+    
+.calcoutput{
+    width: 100%;
+    height: 50px; 
+    color: black;
+}
+
+.calcexit{
+    position: absolute;
+    right: 0px;
+    top: 0px;    
+    width: 25px;
+    height: 25px; 
+    color: black;
+    background-image:url('/images/close_1.png');
+    background-size: contain;
+}
+
+.calcbar{
+    width: 100%;
+    height: 25px; 
+    color: black;
+}
+
+.calcwindow{
+    position: absolute;
+    width: 204px;
+    height: 279px;
+    background-color: White; 
+    border: 2px;
+    border-style: solid;
+    border-color: black;
+    color: white;
+    z-index: 9999;
+    display: none;
+}
+
+.calcbuttonreset{
+    width: 50px;
+    height: 25px;
+    padding: 0px;
+    margin: 0px;
+    color: black;
+}
+
+.calcbutton{
+    width: 50px;
+    height: 50px;
+    padding: 0px;
+    margin: 0px;
+    color: black;
+}
+
+
+.message-container{
+    margin-top: 20px;
+}
+
+.message-you{
+    background-color: #f2dede;
+    margin-right: 100px;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.message-me{
+    background-color: #dff0d8;
+    margin-left: 100px;
+    border-radius: 10px;
+    padding: 10px;
+    
+}
+
+.invalid{
+   border-color: red;
+}
+
+.selected{
+    background-color: lightgray;
+}
+
+.selected2{
+    border: solid;
+    border-width: 2px;
+    border-radius: 25px;
+}
+
+.hover_img a { position:relative; }
+.hover_img a span { position:absolute; display:none; z-index:99; }
+.hover_img a:hover span { display:block; }
+
+
+.nav-tabs > li > a{
+  background-color:lightgrey;
+}
+
+.input-group-addon.primary {
+    color: rgb(255, 255, 255);
+    background-color: rgb(50, 118, 177);
+    border-color: rgb(40, 94, 142);
+}
+.input-group-addon.success {
+    color: rgb(255, 255, 255);
+    background-color: rgb(92, 184, 92);
+    border-color: rgb(76, 174, 76);
+}
+.input-group-addon.info {
+    color: rgb(255, 255, 255);
+    background-color: rgb(57, 179, 215);
+    border-color: rgb(38, 154, 188);
+}
+.input-group-addon.warning {
+    color: rgb(255, 255, 255);
+    background-color: rgb(240, 173, 78);
+    border-color: rgb(238, 162, 54);
+}
+.input-group-addon.danger {
+    color: rgb(255, 255, 255);
+    background-color: rgb(217, 83, 79);
+    border-color: rgb(212, 63, 58);
+}
+
+#design {
+    /*background-color: red;*/
+    width: 100%;
+    min-height: 50vh;
+    border: 1px solid #ddd;
+    padding-top: 5px;
+}
+
+.element {  
+    overflow:auto; 
+    font-size: 12px;
+}
+
+.tablabel {
+    text-align: right;
+}
+
+.disabledbutton {
+    pointer-events: none;
+    opacity: 0.4;
+}
+
+.modalload {
+    display:    none;
+    position:   fixed;
+    z-index:    999999;
+    top:        0;
+    left:       0;
+    height:     100%;
+    width:      100%;
+    background: rgba( 255, 255, 255, .8 ) 
+                url('/images/loading4.gif') 
+                50% 50% 
+                no-repeat;
+}
+
+.calload {
+    display: none;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+    z-index: 1000;
+    background: rgba( 255, 255, 255, .8 )
+    url('/images/loading4.gif')
+    50% 50%
+    no-repeat;
+}
+
+
+/* When the body has the loading class, we turn
+   the scrollbar off with overflow:hidden */
+body.loading {
+    overflow: hidden;   
+}
+
+/* Anytime the body has the loading class, our
+   modal element will be visible */
+body.loading .modalload {
+    display: block;
+}
+
+calendar.loading .calload {
+    display: block;
+}
+
+#floating_alert {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 5000;
+}
+
+.well{
+    width: 100%;
+}
+
+html{
+    height: 100vh;
+}
+
+body{
+    height: 100vh;
+}
+
+#wrapper{
+    height: 100vh;
+}
+
+#sidebar {
+    width: 270px;
+    float: left;
+    height: 100vh;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+#content{
+    width: calc(100% - 270px);
+    height: 100vh;
+    float: left;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+    background-color: white;
+    border-left: inset;
+    overflow: hidden;
+    overflow-y: scroll;
+}
+
+
+tr.highlight {
+    
+    -webkit-transition: all 1s;
+    -webkit-animation: DIV-BORDER 2s infinite;
+}
+
+.Absolute-Center {
+  margin: auto;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+  
+}
+
+.Absolute-Center.is-Responsive {
+  width: 50%; 
+  height: 50%;
+  max-width: 500px;
+  min-width: 300px;
+  padding: 40px;
+  /*background-color: #faffbd;
+    border-radius: 10px;
+    border-color: #a6c535;
+    border-style: solid;
+    border-width: 20px;*/
+}
+
+#logo-background{
+    /*background-image:url('/images/background.png');*/
+    background-size:100% 100%;
+}
+
+#logo-container{
+  margin: auto;
+  margin-bottom: 10px;
+  width:300px;
+  height:200px;
+  background-image:url('/images/oslogo.png');
+}
+
+#login-companyname{
+  margin: auto;
+  margin-bottom: 10px;
+  width:300px;
+font-size: 150%;
+  text-align: center;
+}
+
+#ACP-logo-background{
+    background-image:url('/images/background.png');
+    background-size:100% 100%;
+    width:150px;
+
+}
+#ACP-logo-container{
+  margin: auto;
+  margin-bottom: 10px;
+  background-size:100% 100%;
+  width:150px;
+  background-image:url('/images/oslogo.png');
+}
+
+
+
+#APC-header{
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    right: 0px;
+    height: 100px;
+}
+
+#APC-body{
+    position: absolute;
+    left: 0px;
+    top: 100px;
+    right: 0px;
+    bottom: 0px;
+}
+
+#ActionListTrigger2{
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    background-image: url("../../images/tempbutton.png");
+    background-size:     cover;                      /* <------ */
+    background-repeat:   no-repeat;
+    background-position: center center;
+    width: 50px;
+    height: 50px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-right: 10px;
+    margin-top: 10px;
+}
+
+#ActionListTrigger{
+    position: absolute;
+    left: 50%;
+    top: 0px;
+    right: 50%;
+    background-color: #eee;
+    width: 100px;
+    height: 25px;
+    border-width: 0px 2px 2px 2px;
+    border-style: outset;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    
+}
+
+#ActionList{
+    display:none;
+    position: absolute;
+    left: 50%;
+    top: 25px;
+    right: 50%;
+    width: 200px;
+    background-color: #eee;
+    border-width: 2px 2px 2px 2px;
+    border-style: outset;
+    border-radius: 5px;
+    z-index: 99999;
+}
+
+.ActionListMenuItem{
+    width: 100%;
+}
+
+#ActionList a:link{ color:black; text-decoration: underline; font-weight: bold;} 
+#ActionList a:visited{ color:black; text-decoration: underline; font-weight: bold;} 
+#ActionList a:hover{ color:red; text-decoration: underline; font-weight: bold;} 
+
+.ActionMenu{
+
+    background-color: yellow;
+}
+
+
+#SchedulerMenu {
+  position: absolute;
+  display:none;
+  z-index: 100;
+}
+
+#TabMenu {
+  position: absolute;
+  display:none;
+  z-index: 100;
+}
+
+.OS-Button{
+    background-color: white;
+    border-color: red;
+    border-width: 2px;
+}
+
+.dropdown:hover .dropdown-menu {
+display: block;
+}
+
+/* make sidebar nav vertical */ 
+@media (min-width: 768px) {
+  .sidebar-nav .navbar .navbar-collapse {
+    padding: 0;
+    max-height: none;
+  }
+  .sidebar-nav .navbar ul {
+    float: none;
+  }
+  .sidebar-nav .navbar ul:not {
+    display: block;
+  }
+  .sidebar-nav .navbar li {
+    float: none;
+    display: block;
+  }
+  .sidebar-nav .navbar li a {
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+}
+
+/* .modal-transparent */
+
+.modal-transparent {
+  background: transparent;
+}
+.modal-transparent .modal-content {
+  background: transparent;
+}
+.modal-backdrop.modal-backdrop-transparent {
+  background: #ffffff;
+}
+.modal-backdrop.modal-backdrop-transparent.in {
+  opacity: .9;
+  filter: alpha(opacity=90);
+}
+
+/* .modal-fullscreen */
+
+.modal-fullscreen {
+  background: transparent;
+}
+.modal-fullscreen .modal-content {
+  background: transparent;
+  border: 0;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+.modal-backdrop.modal-backdrop-fullscreen {
+  background: #ffffff;
+}
+.modal-backdrop.modal-backdrop-fullscreen.in {
+  opacity: .97;
+  filter: alpha(opacity=97);
+}
+
+/* .modal-fullscreen size: we use Bootstrap media query breakpoints */
+
+.modal-fullscreen .modal-dialog {
+  margin: 0;
+  margin-right: auto;
+  margin-left: auto;
+  width: 100%;
+}
+@media (min-width: 768px) {
+  .modal-fullscreen .modal-dialog {
+    width: 750px;
+  }
+}
+@media (min-width: 992px) {
+  .modal-fullscreen .modal-dialog {
+    width: 970px;
+  }
+}
+@media (min-width: 1200px) {
+  .modal-fullscreen .modal-dialog {
+     width: 1170px;
+  }
+}
+
+/* Put any custom CSS you want for your menu when it is collapsed */
+@media (max-width: 768px) {
+   .bootstrap-vertical-nav {
+      
+   }
+}
+
+@media (max-width: 979px) {
+  body {
+    padding-top: 0px;
+  }
+}
+
+

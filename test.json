@@ -1,0 +1,151 @@
+.ql-font-alegreya-sans {
+  font-family: 'Alegreya Sans'
+  ;
+} .ql-font-alegreya {
+  font-family: 'Alegreya'
+  ;
+} .ql-font-ariel {
+  font-family: 'Ariel'
+  ;
+} .ql-font-bioRhyme {
+  font-family: 'BioRhyme'
+  ;
+} .ql-font-black-ops-one {
+  font-family: 'Black Ops One'
+  ;
+} .ql-font-bungee-shade {
+  font-family: 'Bungee Shade'
+  ;
+} .ql-font-bungee {
+  font-family: 'Bungee'
+  ;
+} .ql-font-cabin {
+  font-family: 'Cabin'
+  ;
+} .ql-font-calligraffitti {
+  font-family: 'Calligraffitti'
+  ;
+} .ql-font-charmonman {
+  font-family: 'Charmonman'
+  ;
+} .ql-font-courier-new {
+  font-family: 'Courier New'
+  ;
+} .ql-font-creepster {
+  font-family: 'Creepster'
+  ;
+} .ql-font-dancing-script {
+  font-family: 'Dancing Script'
+  ;
+} .ql-font-ewert {
+  font-family: 'Ewert'
+  ;
+} .ql-font-fredericka-the-great {
+  font-family: 'Fredericka the Great'
+  ;
+} .ql-font-fruktur {
+  font-family: 'Fruktur'
+  ;
+} .ql-font-georgia {
+  font-family: 'Georgia'
+  ;
+} .ql-font-gravitas-one {
+  font-family: 'Gravitas One'
+  ;
+} .ql-font-homemade-apple {
+  font-family: 'Homemade Apple'
+  ;
+} .ql-font-ibm-plex-mono {
+  font-family: 'IBM Plex Mono'
+  ;
+} .ql-font-ibm-plex-sans-condensed {
+  font-family: 'IBM Plex Sans Condensed'
+  ;
+} .ql-font-ibm-plex-sans {
+  font-family: 'IBM Plex Sans'
+  ;
+} .ql-font-ibm-plex-serif {
+  font-family: 'IBM Plex Serif'
+  ;
+} .ql-font-inconsolata {
+  font-family: 'Inconsolata'
+  ;
+} .ql-font-indie-flower {
+  font-family: 'Indie Flower'
+  ;
+} .ql-font-italianno {
+  font-family: 'Italianno'
+  ;
+} .ql-font-loved-by-the-king {
+  font-family: 'Loved by the King'
+  ;
+} .ql-font-lucida-sans-unicode {
+  font-family: 'Lucida Sans Unicode'
+  ;
+} .ql-font-merriweather-sans {
+  font-family: 'Merriweather Sans'
+  ;
+} .ql-font-merriweather {
+  font-family: 'Merriweather'
+  ;
+} .ql-font-monoton {
+  font-family: 'Monoton'
+  ;
+} .ql-font-nanum-brush-script {
+  font-family: 'Nanum Brush Script'
+  ;
+} .ql-font-nanum-pen-script {
+  font-family: 'Nanum Pen Script'
+  ;
+} .ql-font-nunito-sans {
+  font-family: 'Nunito Sans'
+  ;
+} .ql-font-nunito {
+  font-family: 'Nunito'
+  ;
+} .ql-font-pacifico {
+  font-family: 'Pacifico'
+  ;
+} .ql-font-quattrocento-sans {
+  font-family: 'Quattrocento Sans'
+  ;
+} .ql-font-quattrocento {
+  font-family: 'Quattrocento'
+  ;
+} .ql-font-quicksand {
+  font-family: 'Quicksand'
+  ;
+} .ql-font-roboto-mono {
+  font-family: 'Roboto Mono'
+  ;
+} .ql-font-roboto-slab {
+  font-family: 'Roboto Slab'
+  ;
+} .ql-font-roboto {
+  font-family: 'Roboto'
+  ;
+} .ql-font-rubik {
+  font-family: 'Rubik'
+  ;
+} .ql-font-satisfy {
+  font-family: 'Satisfy'
+  ;
+} .ql-font-tahoma {
+  font-family: 'Tahoma'
+  ;
+} .ql-font-times-new-roman {
+  font-family: 'Times New Roman'
+  ;
+} .ql-font-trebuchet-ms {
+  font-family: 'Trebuchet MS'
+  ;
+} .ql-font-vbuntu {
+  font-family: 'Ubuntu'
+  ;
+} .ql-font-verdana {
+  font-family: 'Verdana'
+  ;
+} .ql-font-vt323 {
+  font-family: 'VT323'
+  ;
+}

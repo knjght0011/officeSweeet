@@ -1,0 +1,134 @@
+html {
+    width: 210mm;
+    margin: 0;
+    padding: 0;
+}
+* {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+.page {
+    width: 215mm;
+    min-height: 278mm;
+    border: 1px #D3D3D3 solid;
+    background: white;
+    position: relative;    
+}
+.subpage {
+    padding: 1cm;
+    border: 5px red solid;
+    height: 257mm;
+    outline: 2cm #FFEAEA solid;
+}
+
+#title { 
+    /*height: 7mm; */
+    width: 100%; 
+    text-align: center; 
+    font: bold 15px Helvetica, Sans-Serif; 
+    margin-bottom: 5mm;
+    overflow: overlay; 
+    display: inline-block;
+}
+
+#header { 
+    height: 7mm; 
+    width: 100%; 
+    background: #222; 
+    text-align: center; 
+    color: white; 
+    font: bold 15px Helvetica, Sans-Serif; 
+    text-decoration: uppercase; 
+    letter-spacing: 20px;
+}
+
+#items { 
+    clear: both; 
+    width: 185mm; 
+    margin: 30px 0 0 0; 
+    position: absolute;
+    top: 70mm;
+}
+#items th { border: 1px solid black; padding: 5px; background: #eee; }
+#items textarea { width: 80px; height: 50px; }
+#items tr.item-row td { border: 1px solid black; padding: 5px; vertical-align: top; }
+#items td.description { border: 1px solid black; padding: 5px; width: 300px; }
+#items td.item-name { border: 1px solid black; padding: 5px; width: 3em; }
+#items td.description textarea, #items td.item-name textarea { width: 100%; }
+#items td.total-line { border: 1px solid black; padding: 5px; border-right: 0; text-align: right; }
+#items td.total-value { border: 1px solid black; padding: 5px; border-left: 0; padding: 10px; }
+#items td.total-value textarea { height: 20px; background: none; }
+#items td.balance { border: 1px solid black; padding: 5px; background: #eee; }
+#items td.blank { border: 0; }
+
+#items td.units { border: 1px solid black; padding: 5px; width: 1em; }
+#items td.costper { border: 1px solid black; padding: 5px; width: 4em; }
+#items td.total { border: 1px solid black; padding: 5px; width: 1em; }
+
+#meta{ 
+    position: absolute;
+    left: 150mm;
+    top: 20mm;
+    width: 50mm;
+    height: 20mm;
+
+}
+#meta1 td { border: 1px solid black; padding: 5px; text-align: right; }
+#meta1 td.meta-head { border: 1px solid black; padding: 5px; text-align: left; background: #eee; }
+#meta1 td textarea { width: 100%; height: 20px; text-align: right; }
+
+/*
+#toaddess { 
+    position: absolute;
+    left: 20mm;
+    top: 45mm;
+    width: 70mm;
+    height: 20mm;
+    border: 1px solid black;
+    padding: 5px; 
+    
+}
+
+#returnaddress { 
+    position: absolute;
+    left: 10mm;
+    top: 20mm;
+    width: 50mm;
+    height: 20mm;
+    
+    border: 1px solid black; 
+    padding: 5px; 
+    
+}
+
+
+Invoice/Quote specfics
+
+
+
+textarea { border: 0; font: 14px Georgia, Serif; overflow: hidden; resize: none; }
+table { border-collapse: collapse; }
+/*
+#quote table td, table th { border: 1px solid black; padding: 5px; }
+
+
+
+#address { width: 250px; height: 60px; float: left; }
+#customer { overflow: hidden; }
+
+#logo { text-align: right; float: right; position: relative; margin-top: 25px; border: 1px solid #fff; max-width: 540px; max-height: 100px; overflow: hidden; }
+#logoctr { display: none; }
+#logohelp { text-align: left; display: none; font-style: italic; padding: 10px 5px;}
+#logohelp input { margin-bottom: 5px; }
+#customer-title { font-size: 20px; font-weight: bold; float: left; }
+
+
+
+
+#terms { text-align: center; margin: 20px 0 0 0; }
+#terms h5 { text-transform: uppercase; font: 13px Helvetica, Sans-Serif; letter-spacing: 10px; border-bottom: 1px solid black; padding: 0 0 8px 0; margin: 0 0 8px 0; }
+#terms textarea { width: 100%; text-align: center;}
+
+
+
+*/

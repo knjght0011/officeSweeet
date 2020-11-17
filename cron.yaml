@@ -1,0 +1,11 @@
+cron:
+- description: RunTaskQueue
+  url: /cron?job=RunTaskQueue
+  schedule: every 1 minutes
+- description: TNrefresh
+  url: /cron?job=TNrefresh
+  schedule: every 6 hours
+- description: QueueRecurringInvoices
+  url: /cron?job=QueueRecurringInvoices
+  schedule: every day 02:00
+  timezone: America/New_York
