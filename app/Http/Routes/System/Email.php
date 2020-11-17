@@ -2,6 +2,7 @@
 #Email
 Route::group(['prefix' => 'Email'], function () {
     Route::get('Overview', array('uses' => 'OS\Email\EmailController@Overview'));
+    Route::post('SendFromPopupCompose', array('uses' => 'OS\Email\EmailController@SendEmailFromPopupCompose'));
     Route::post('Send', array('uses' => 'OS\Email\EmailController@SendEmail'));
     Route::post('SendPO', array('uses' => 'OS\Email\EmailController@SendPOEmail'));
     Route::post('SendNotification', array('uses' => 'OS\Email\EmailController@SendNotification'));

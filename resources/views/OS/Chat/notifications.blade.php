@@ -232,6 +232,9 @@
                 case "link":
                     GoToPage($note['link']);
                     break;
+                case "newEmail":
+                    GoToPageNewTab($note['link']);
+                    break;
                 default:
                     $.dialog({
                         title: $note['title'],

@@ -279,6 +279,10 @@ function GoToPage($link) {
     link.click();    
 }
 
+function GoToPageNewTab($link) {
+    window.open("https://www.w3schools.com");
+}
+
 function AddPopup($element, $position, $text) {
     $element.data( "toggle", "popover" );
     $element.data( "placement", $position );

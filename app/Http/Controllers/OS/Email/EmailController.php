@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\OS\Email;
 
 use App\Helpers\OS\Financial\ClientOverviewHelper;
+use App\Helpers\OS\NotificationHelper;
 use App\Http\Controllers\Controller;
 
 use App\Mail\EmailNotification;
@@ -22,9 +23,42 @@ use App\Models\OS\Email\Email;
 use mysql_xdevapi\Exception;
 
 
-class EmailController extends Controller {
+class EmailController extends Controller
+{
 
-    public function SendEmail(){
+    public function SendEmailFromPopupCompose()
+    {
+
+        $data = array(
+            'contact_id' => Input::get('contact_id'),
+            'recipient_id' => Input::get('recipient_id'),
+            'email' => Input::get('email'),
+            'contact_type' => Input::get('contact_type'),
+            'subject' => Input::get('subject'),
+            'body' => Input::get('body'),
+            'link_id' => Input::get('link_id'),
+            'type' => Input::get('type'),
+        );
+
+        $email = new Email;
+        //$email->email = $data['email'];
+        $email->subject = $data['subject'];
+        $email->body = $data['body'];
+        $email->type = $data['type'];
+        $email->contact_id = $data['contact_id'];
+        $email->contact_type = $data['contact_type'];
+        $email->email = $data['email'];
+        $email->linked_id = 1;
+        $email->save();
+        $email->Send();
+        // Send Notifications
+        NotificationHelper::CreateNotification('You have new Email!', 'Description: You have new email, please check it.', $data['recipient_id'], 'newEmail', Auth::user()->id);
+        return ['status' => 'OK'];
+
+    }
+
+    public function SendEmail()
+    {
 
         $data = array(
             'contact_id' => Input::get('contact_id'),
@@ -33,7 +67,7 @@ class EmailController extends Controller {
             'body' => Input::get('body'),
             'link_id' => Input::get('link_id'),
             'type' => Input::get('type'),
-            );
+        );
 
         $email = new Email;
         //$email->email = $data['email'];
@@ -46,23 +80,23 @@ class EmailController extends Controller {
         $email->email = $email->GetContact()->email;
 
         $email->linked_id = $data['link_id'];
-        if($email->linked_id === null){
+        if ($email->linked_id === null) {
 
             $email->save();
             $email->Send();
 
             return ['status' => 'OK'];
 
-        }else{
+        } else {
 
             $link = $email->GetLink();
-            if(count($link) === 1){
+            if (count($link) === 1) {
 
-                if($email->type === "Document" or $email->type === "PurchaseOrder" or $email->type === "Quote"){
+                if ($email->type === "Document" or $email->type === "PurchaseOrder" or $email->type === "Quote") {
                     $email->attachment = $link->PDFBase64();
                 }
 
-                if($email->type === "Overview"){
+                if ($email->type === "Overview") {
                     $email->attachment = ClientOverviewHelper::PDFBase64($link);
                 }
 
@@ -71,21 +105,20 @@ class EmailController extends Controller {
 
                 return ['status' => 'OK'];
 
-            }else{
+            } else {
                 return ['status' => 'linknotfound'];
             }
         }
     }
 
-    public function SendPOEmail(){
+    public function SendPOEmail()
+    {
 
         $data = array(
             'email' => Input::get('email'),
             'link_id' => Input::get('link_id'),
             'body' => Input::get('body'),
         );
-
-
 
 
         $email = new Email;
@@ -96,7 +129,7 @@ class EmailController extends Controller {
         $email->linked_id = $data['link_id'];
 
         $link = $email->GetLink();
-        if(count($link) === 1) {
+        if (count($link) === 1) {
             $email->attachment = $link->PDFBase64();
         }
 
@@ -122,13 +155,13 @@ class EmailController extends Controller {
 
             });
             return ['status' => 'OK'];
-        }catch (Exception $e)
-        {
+        } catch (Exception $e) {
             return ['status' => $e];
         }
     }
 
-    public function BulkSend(){
+    public function BulkSend()
+    {
 
         $data = array(
             'recipients' => Input::get('recipients'),
@@ -139,9 +172,9 @@ class EmailController extends Controller {
 
         $template = EmailTemplate::where('id', $data['link_id'])->first();
 
-        if(count($template) === 1){
+        if (count($template) === 1) {
 
-            foreach ($data['recipients'] as $recipient){
+            foreach ($data['recipients'] as $recipient) {
 
                 $email = new Email;
                 $email->email = $recipient['email'];
@@ -160,14 +193,15 @@ class EmailController extends Controller {
 
             return ['status' => 'OK'];
 
-        }else{
+        } else {
             return ['status' => 'notfound'];
         }
 
 
     }
 
-    public function TemplateTest($subdomain, $templateid, $emailaddress){
+    public function TemplateTest($subdomain, $templateid, $emailaddress)
+    {
 
         $data = array(
             'email' => $emailaddress,
@@ -184,43 +218,45 @@ class EmailController extends Controller {
         $email->type = $data['type'];
 
         $email->linked_id = $data['link_id'];
-        if($email->linked_id === null){
+        if ($email->linked_id === null) {
 
             $email->save();
             $email->Send();
 
             return ['status' => 'OK'];
 
-        }else{
+        } else {
 
             $link = $email->GetLink();
-            if(count($link) === 1){
+            if (count($link) === 1) {
                 $email->save();
                 $email->Send();
 
                 return ['status' => 'OK'];
 
-            }else{
+            } else {
                 return ['status' => 'linknotfound'];
             }
         }
     }
 
-    public function ResendEmail(){
+    public function ResendEmail()
+    {
 
         $email = Email::where('id', Input::get('id'))->first();
-        if(count($email) === 1){
+        if (count($email) === 1) {
             $email->Send();
             return ['status' => 'OK'];
-        }else{
+        } else {
             return ['status' => 'notfound'];
         }
     }
 
-    public function PreviewEmail($subdomain, $id){
+    public function PreviewEmail($subdomain, $id)
+    {
 
         $email = Email::where('id', $id)->first();
-        if(count($email) === 1){
+        if (count($email) === 1) {
             switch ($email->type) {
                 case "Quote":
                 case "Overview":
@@ -229,8 +265,8 @@ class EmailController extends Controller {
                 case "PurchaseOrder":
 
                     return View::make('Emails.Customer.file')
-                            ->with('body', $email->body)
-                            ->with('token', $email->token);
+                        ->with('body', $email->body)
+                        ->with('token', $email->token);
 
 
                 case "Invoice":
@@ -254,22 +290,23 @@ class EmailController extends Controller {
                 default:
                     return Response::make(view('errors.404'), 404);
             }
-        }else{
+        } else {
             return Response::make(view('errors.404'), 404);
         }
 
     }
 
-    public function ViewAttachment($subdomain, $id){
+    public function ViewAttachment($subdomain, $id)
+    {
 
         $email = Email::where('id', $id)->first();
-        if(count($email) === 1){
-            if($email->attachment === null){
+        if (count($email) === 1) {
+            if ($email->attachment === null) {
                 return Response::make(view('errors.404'), 404);
-            }else{
-                return response($email->Attachment())->header('content-type','application/pdf') ->header('Content-Disposition', 'inline; filename="file.pdf"');
+            } else {
+                return response($email->Attachment())->header('content-type', 'application/pdf')->header('Content-Disposition', 'inline; filename="file.pdf"');
             }
-        }else{
+        } else {
             return Response::make(view('errors.404'), 404);
         }
     }
@@ -291,11 +328,12 @@ class EmailController extends Controller {
     }
     */
 
-    public function Overview(){
+    public function Overview()
+    {
 
         $emails = Email::orderBy('id', 'desc')->get();
 
-        if(Auth::user()->hasPermission('bulk_email_permission')){
+        if (Auth::user()->hasPermission('bulk_email_permission')) {
 
             $clients = Client::all();
             $vendors = Vendor::all();
@@ -310,7 +348,7 @@ class EmailController extends Controller {
                 ->with('templates', $templates)
                 ->with('emails', $emails);
 
-        }else{
+        } else {
 
             return View::make('OS.Email.main')
                 ->with('emails', $emails);
@@ -319,15 +357,16 @@ class EmailController extends Controller {
 
     }
 
-    public function CompanyLogo(){
+    public function CompanyLogo()
+    {
         $base64 = \App\Helpers\OS\SettingHelper::GetSetting('companylogo');
-        if($base64 === null){
+        if ($base64 === null) {
             return "none";
-        }else{
-                $split = explode( "," , $base64);
-                #return var_dump($split);
-                $image = base64_decode($split[1]);
-                return response($image) ->header('content-type','image/png') ->header('Content-Disposition', 'inline; filename="CompanyLogo.png"');
+        } else {
+            $split = explode(",", $base64);
+            #return var_dump($split);
+            $image = base64_decode($split[1]);
+            return response($image)->header('content-type', 'image/png')->header('Content-Disposition', 'inline; filename="CompanyLogo.png"');
         }
     }
 
@@ -337,16 +376,17 @@ class EmailController extends Controller {
             ->with('token', $token);
     }
 
-    public function viewAttachmentPublicPDF($subdomain, $token){
+    public function viewAttachmentPublicPDF($subdomain, $token)
+    {
 
         $email = Email::where('token', $token)->first();
-        if(count($email) === 1){
-            if($email->attachment === null){
+        if (count($email) === 1) {
+            if ($email->attachment === null) {
                 return Response::make(view('errors.404'), 404);
-            }else{
-                return response($email->Attachment())->header('content-type','application/pdf') ->header('Content-Disposition', 'inline; filename="file.pdf"');
+            } else {
+                return response($email->Attachment())->header('content-type', 'application/pdf')->header('Content-Disposition', 'inline; filename="file.pdf"');
             }
-        }else{
+        } else {
             return Response::make(view('errors.404'), 404);
         }
     }
