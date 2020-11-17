@@ -280,8 +280,8 @@ function GoToPage($link) {
 }
 
 function GoToPageNewTab($link) {
-    window.open("https://www.w3schools.com");
-}
+    window.open("/Clients/View/"+ $link + '#file');
+    window.open("/Clients/View/"+ $link + '#emails');}
 
 function AddPopup($element, $position, $text) {
     $element.data( "toggle", "popover" );
