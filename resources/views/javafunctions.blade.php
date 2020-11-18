@@ -279,9 +279,15 @@ function GoToPage($link) {
     link.click();    
 }
 
-function GoToPageNewTab($link) {
-    window.open("/Clients/View/"+ $link + '?type=file&&child=mail');
+function GoToPageNewTabClient($link) {
+    window.open("/Clients/View/"+ $link + '?type=file&child=mail');
     window.open("/Clients/View/"+ $link + '#emails');}
+
+function GoToPageNewTabVendor($link) {
+    window.open("/Vendors/View/"+ $link);}
+
+function GoToPageNewTabEmployee($link) {
+    window.open("/Employees/View/"+ $link);}
 
 function AddPopup($element, $position, $text) {
     $element.data( "toggle", "popover" );

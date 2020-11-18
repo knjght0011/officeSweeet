@@ -232,8 +232,14 @@
                 case "link":
                     GoToPage($note['link']);
                     break;
-                case "newEmail":
-                    GoToPageNewTab($note['link']);
+                case "popupModalToClient":
+                    GoToPageNewTabClient($note['link']);
+                    break;
+                case "popupModalToVendor":
+                    GoToPageNewTabVendor($note['link']);
+                    break;
+                case "popupModalToEmployee":
+                    GoToPageNewTabEmployee($note['link']);
                     break;
                 default:
                     $.dialog({

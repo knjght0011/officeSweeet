@@ -50,9 +50,18 @@ class EmailController extends Controller
         $email->email = $data['email'];
         $email->linked_id = 1;
         $email->save();
-        $email->Send();
-        // Send Notifications
-        NotificationHelper::CreateNotification('You have new Email!', 'Description: You have new email, please check it.', $data['recipient_id'], 'newEmail', Auth::user()->id);
+        $email->fromEmail = Auth::user()->email;
+        $email->SendPopup();
+        // Send Notifications To Client
+        if($email->type === 'EmailFromPopupModalToClient')
+        NotificationHelper::CreateNotification('Your email has sent to Client '.$data['email'], 'Description: Your email has sent.', $data['recipient_id'], 'popupModalToClient', Auth::user()->id);
+        // Send Notifications To Vendor
+        if($email->type === 'EmailFromPopupModalToVendor')
+        NotificationHelper::CreateNotification('Your email has sent to Vendor '.$data['email'], 'Description: Your email has sent.', $data['recipient_id'], 'popupModalToVendor', Auth::user()->id);
+         // Send Notifications To Employee
+        if($email->type === 'EmailFromPopupModalToEmployee')
+        NotificationHelper::CreateNotification('Your email has sent to Employee '.$data['email'], 'Description: Your email has sent.', $data['recipient_id'], 'popupModalToEmployee', Auth::user()->id);
+
         return ['status' => 'OK'];
 
     }

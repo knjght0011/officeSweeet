@@ -1,4 +1,4 @@
-@include('Emails.emailCompose')
+@include('Emails.clientsTabEmailCompose')
 <div class="row" style="margin-top: 20px;">
 
     <div class="col-md-4">
@@ -10,16 +10,16 @@
 
 
     <div class="col-md-3">
-        <div class="input-group">
-            <span class="input-group-addon" for="client-category-search"><div style="width: 7em;">Category:</div></span>
-            <select id="client-category-search" name="client-category-search" class="form-control">
-                <option value="all" selected>All</option>
-                @foreach(\App\Helpers\OS\Client\ClientHelper::AllCategorys() as $department)
-                    <option value="{{ $department }}">{{ $department }}</option>
-                @endforeach
-                <option value="none">None</option>
-            </select>
-        </div>
+            <div class="input-group">
+                <span class="input-group-addon" for="client-category-search"><div style="width: 7em;">Category:</div></span>
+                <select id="client-category-search" name="client-category-search" class="form-control">
+                    <option value="all" selected>All</option>
+                    @foreach(\App\Helpers\OS\Client\ClientHelper::AllCategorys() as $department)
+                        <option value="{{ $department }}">{{ $department }}</option>
+                    @endforeach
+                    <option value="none">None</option>
+                </select>
+            </div>
     </div>
 
     <div class="col-md-2">
@@ -219,7 +219,7 @@
                 { "data": "firstname", "name": "clientcontacts.firstname", "searchable": true  },
                 { "data": "lastname", "name": "clientcontacts.lastname", "searchable": true  },
                 { "data": "phone_number", "name": "clientcontacts.officenumber", "searchable": false, "orderable": false, "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) { if(oData.phone_number_raw == 'None'){$(nTd).html("No Primary Contact Set");}else{$(nTd).html("<a href='tel:"+oData.phone_number_raw+"'>"+oData.phone_number+"</a>");}}},
-                    { "data": "email", "name":"clientcontacts.email", "searchable": false, "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) { $(nTd).html("<a data-toggle='modal' href='#send-popup-compose-email-modal' data-recipient-id='"+oData.id+"' data-client-contact-id='"+oData.primarycontact_id+"' data-mail='"+oData.email+"' class='email'>"+oData.email+"</a>");}},
+                    { "data": "email", "name":"clientcontacts.email", "searchable": false, "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) { $(nTd).html("<a data-toggle='modal' href='#send-popup-compose-email-client-tab-modal' data-recipient-id='"+oData.id+"' data-client-contact-id='"+oData.primarycontact_id+"' data-mail='"+oData.email+"' class='email'>"+oData.email+"</a>");}},
                     @if(app()->make('account')->subdomain === "lls")
                 { "data": "acctive_date", "searchable": false, "orderable": false },
                     @endif

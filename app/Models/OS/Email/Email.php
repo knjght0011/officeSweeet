@@ -12,6 +12,7 @@ use App\Models\OS\Report;
 use App\Models\OS\Templates\Signing;
 use App\Models\User;
 use App\Models\VendorContact;
+use App\Mail\PopupMail;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Mail;
 
@@ -115,7 +116,15 @@ class Email extends Model
                 $this->SendNotification();
                 break;
 
-            case "EmailFromPopupModal":
+            case "EmailFromPopupModalToClient":
+                $this->SendNotification();
+                break;
+
+            case "EmailFromPopupModalToEmployee":
+                $this->SendNotification();
+                break;
+
+            case "EmailFromPopupModalToVendor":
                 $this->SendNotification();
                 break;
 
@@ -129,6 +138,28 @@ class Email extends Model
 
             case "PurchaseOrder":
                 $this->SendFile();
+                break;
+
+            default:
+                return "Error";
+        }
+
+    }
+
+    public function SendPopup(){
+
+        switch ($this->type) {
+
+            case "EmailFromPopupModalToClient":
+                $this->SendPopupMail();
+                break;
+
+            case "EmailFromPopupModalToEmployee":
+                $this->SendPopupMail();
+                break;
+
+            case "EmailFromPopupModalToVendor":
+                $this->SendPopupMail();
                 break;
 
             default:
@@ -248,5 +279,9 @@ class Email extends Model
 
     private function SendNotification(){
         Mail::to($this->email)->send(new File($this->subject, $this->body, $this->type, $this->id, $this->token));
+    }
+
+    private function SendPopupMail(){
+        Mail::to($this->email)->send(new PopupMail($this->fromEmail, $this->subject, $this->body, $this->type, $this->id, $this->token));
     }
 }

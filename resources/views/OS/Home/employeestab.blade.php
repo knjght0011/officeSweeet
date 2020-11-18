@@ -1,3 +1,4 @@
+@include('Emails.employeesTabEmailCompose')
 <div class="row" style="margin-top: 20px;">
 
     <div class="col-md-4">
@@ -93,7 +94,8 @@
             <td><a 
                    href="/Employees/View/{{ $employee1->id }}">{{ $employee1->firstname }} {{ $employee1->middlename }} {{ $employee1->lastname }}</a>
             </td>
-            <td>{!! PageElement::EmailLink($employee1->email) !!}</td>
+            <td>
+                <a data-toggle="modal" href='#send-popup-compose-email-employee-tab-modal' data-recipient-id="{{$employee1->id}}" data-client-contact-id="{{$employee1->id}}" data-mail="{{$employee1->email}}" class="email">{{$employee1->email}}</a>
             <td>
                 <a href="tel:{{ $employee1->phonenumber }}">{{ $employee1->phonenumber }}</a>
             </td>
