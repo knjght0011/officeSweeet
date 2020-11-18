@@ -15,6 +15,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Response;
@@ -309,9 +310,17 @@ class ClientsController extends Controller {
     }
     
     #get /Clients/View/{id}
-    public function showView($subdomain, $id, $tab = null)
+    public function showView( Request $request ,$subdomain, $id, $tab = null)
     {
         $selected_client = intval($id);
+        $type = '';
+        $child = '';
+        if ($request->type != '') {
+            $type = $request->type;
+        }
+        if ($request->child != '') {
+            $child = $request->child;
+        }
         if ($selected_client !== 0) {
            
             $client = Client::where('id', $selected_client)
@@ -358,6 +367,8 @@ class ClientsController extends Controller {
                                 ->with('llsclientinfo', $llsclientinfo)
                                 ->with('client', $client)
                                 ->with('tables', $tables)
+                                ->with('type', $type)
+                                ->with('child', $child)
                                 ->with('tab', $tab);
                         }
                     }
@@ -369,6 +380,8 @@ class ClientsController extends Controller {
                 ->with('services', ServiceLibrary::all())
                 ->with('client', $client)
                 ->with('tables', $tables)
+                ->with('type', $type)
+                ->with('child', $child)
                 ->with('tab', $tab);
 
         } else {

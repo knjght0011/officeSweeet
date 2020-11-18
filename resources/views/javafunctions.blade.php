@@ -280,7 +280,7 @@ function GoToPage($link) {
 }
 
 function GoToPageNewTab($link) {
-    window.open("/Clients/View/"+ $link + '#file');
+    window.open("/Clients/View/"+ $link + '?type=file&&child=mail');
     window.open("/Clients/View/"+ $link + '#emails');}
 
 function AddPopup($element, $position, $text) {

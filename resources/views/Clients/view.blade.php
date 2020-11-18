@@ -43,7 +43,7 @@
         <li role="presentation" style="padding-top: 5px;"><a href="#osinfo" aria-controls="profile" role="tab" data-toggle="tab">OS Info</a></li>
         @endif       
         <li role="presentation" style="padding-top: 5px;"><a href="#notes" aria-controls="profile" role="tab" data-toggle="tab">Notes</a></li>
-        <li role="presentation" style="padding-top: 5px;"><a href="#file" aria-controls="profile" role="tab" data-toggle="tab">Documents</a></li>
+        <li role="presentation" style="padding-top: 5px;"><a class="file-click" href="#file" aria-controls="profile" role="tab" data-toggle="tab">Documents</a></li>
         <li role="presentation" style="padding-top: 5px;"><a href="#transactions" aria-controls="profile" role="tab" data-toggle="tab">Transactions</a></li>
         <li role="presentation" style="padding-top: 5px;"><a href="#contacts" aria-controls="profile" role="tab" data-toggle="tab">Contacts</a></li>
 
@@ -73,7 +73,7 @@
             <br>
             <ul class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="active"><a href="#docs" aria-controls="profile" role="tab" data-toggle="tab">Documents</a></li>
-                <li role="presentation" ><a href="#emails" aria-controls="profile" role="tab" data-toggle="tab">Emails Sent</a></li>
+                <li role="presentation" ><a class="mail-click" href="#emails" aria-controls="profile" role="tab" data-toggle="tab">Emails Sent</a></li>
                 <li role="presentation" ><a href="#signing" aria-controls="profile" role="tab" data-toggle="tab">Signing Requests</a></li>
                 <li role="presentation" ><a href="#quotes" aria-controls="profile" role="tab" data-toggle="tab">{{ TextHelper::GetText("Quotes") }}</a></li>
                 <li role="presentation" ><a href="#fileupload" aria-controls="profile" role="tab" data-toggle="tab">Uploaded Files</a></li>
@@ -411,6 +411,14 @@ function GetMeTheDate(){
     return $date;
 }
 
+$( document ).ready(function() {
+    @if(@$type != '')
+        $('.file-click').click();
+    @endif
+    @if(@$child != '')
+        $('.mail-click').click();
+    @endif
 
+});
 </script>
 @stop
