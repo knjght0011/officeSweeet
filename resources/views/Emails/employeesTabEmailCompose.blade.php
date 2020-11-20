@@ -29,7 +29,7 @@
                                     <div class="col-sm-12 form-group">
                                         <label for="recipient">
                                             Recipient:</label>
-                                        <input id="send-popup-compose-email-recipient-employee-tab" type="text" class="form-control" id="recipient" name="recipient" required>
+                                        <input disabled id="send-popup-compose-email-recipient-employee-tab" type="text" class="form-control" id="recipient" name="recipient" required>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -43,7 +43,7 @@
                                     <div class="col-sm-12 form-group">
                                         <label for="message">
                                             Message:</label>
-                                        <textarea id="send-popup-compose-email-body-employee-tab" class="form-control" type="textarea" name="message"  maxlength="6000" rows="7"></textarea>
+                                        <div name="send-popup-compose-email-body-employee-tab" id="send-popup-compose-email-body-employee-tab"></div>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -95,6 +95,19 @@
 
 <script>
     $(document).ready(function () {
+
+        ClassicEditor.create( document.querySelector('#send-popup-compose-email-body-employee-tab'))
+            .then( editor => {
+                window.employeeeditor = editor;
+
+                $height = $('#send-popup-compose-email-body-employee-tab').height() + 200;
+                employeeeditor.ui.view.editable.editableElement.style.height = $height + 'px';
+
+            } )
+            .catch( err => {
+                console.error( err.stack );
+            } );
+
         $('#send-popup-compose-email-employee-tab-choose-modal').on('show.bs.modal', function (event) {
             var button  = $(event.relatedTarget); // Button that triggered the modal
             var email = button.data('mail'); // Extract info from data-* attributes
@@ -138,7 +151,7 @@
             $data['contact_type'] = "Client";
             $data['email'] = $('#send-popup-compose-email-recipient-employee-tab').val();
             $data['subject'] = $('#send-popup-compose-email-subject-employee-tab').val();
-            $data['body'] = $('#send-popup-compose-email-body-employee-tab').val();
+            $data['body'] = employeeeditor.getData();
             $data['link_id'] = $('#send-popup-compose-email-employee-tab-modal').data('link_id');
             $data['type'] = $('#send-popup-compose-email-employee-tab-modal').data('type');
             post = $.post("/Email/SendFromPopupCompose", $data);

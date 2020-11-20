@@ -74,6 +74,7 @@
             <ul class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="active"><a href="#docs" aria-controls="profile" role="tab" data-toggle="tab">Documents</a></li>
                 <li role="presentation" ><a class="mail-click" href="#emails" aria-controls="profile" role="tab" data-toggle="tab">Emails Sent</a></li>
+                <li role="presentation" ><a class="inbox-mail-click" href="#inbox-emails" aria-controls="profile" role="tab" data-toggle="tab">Emails Received</a></li>
                 <li role="presentation" ><a href="#signing" aria-controls="profile" role="tab" data-toggle="tab">Signing Requests</a></li>
                 <li role="presentation" ><a href="#quotes" aria-controls="profile" role="tab" data-toggle="tab">{{ TextHelper::GetText("Quotes") }}</a></li>
                 <li role="presentation" ><a href="#fileupload" aria-controls="profile" role="tab" data-toggle="tab">Uploaded Files</a></li>
@@ -90,6 +91,10 @@
 
                 <div role="tabpanel" class="tab-pane" id="emails">
                     @include('Clients.view.emails')
+                </div>
+
+                <div role="tabpanel" class="tab-pane" id="inbox-emails">
+                    @include('Clients.view.inbox-emails')
                 </div>
 
                 <div role="tabpanel" class="tab-pane" id="signing">

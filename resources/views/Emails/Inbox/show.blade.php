@@ -77,7 +77,7 @@
                                         <div class="col-sm-12 form-group">
                                             <label for="recipient">
                                                 Recipient:</label>
-                                            <input id="inbox-reply-recipient" type="text" class="form-control"
+                                            <input disabled id="inbox-reply-recipient" type="text" class="form-control"
                                                    id="recipient" name="recipient" required>
                                         </div>
                                     </div>
@@ -93,8 +93,8 @@
                                         <div class="col-sm-12 form-group">
                                             <label for="message">
                                                 Message:</label>
-                                            <textarea id="inbox-reply-body" class="form-control" type="textarea"
-                                                      name="message" maxlength="6000" rows="7"></textarea>
+                                            <div name="inbox-reply-body" id="inbox-reply-body"></div>
+
                                         </div>
                                     </div>
                                     <div class="row">
@@ -131,11 +131,26 @@
     {{--<iframe id="bodyframe" style="width: 100%; min-height: 100%;" src="{{ url("/Mail/Body/" . $mail->id) }}"></iframe>--}}
     <script>
         $(document).ready(function () {
+
+            ClassicEditor.create( document.querySelector('#inbox-reply-body'))
+                .then( editor => {
+                    window.replyeditor = editor;
+
+                    $height = $('#inbox-reply-body').height() + 200;
+                    replyeditor.ui.view.editable.editableElement.style.height = $height + 'px';
+
+                } )
+                .catch( err => {
+                    console.error( err.stack );
+                } );
+
             $('#inbox-reply-modal').on('show.bs.modal', function (event) {
                 var email = '<?php echo $mail->sender ?>';
+                var subject = '<?php echo $mail->subject ?>';
                 // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
                 // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
                 $("#inbox-reply-recipient").val(email);
+                $("#inbox-reply-subject").val('Reply: ' + subject);
                 $('#inbox-reply-modal').data('email', email);
                 $('#inbox-reply-modal').data('type', 'ReplyEmail');
             });
@@ -149,7 +164,7 @@
                 $data['email'] = $('#inbox-reply-modal').data('email');
                 $data['contact_type'] = "Client";
                 $data['subject'] = $('#inbox-reply-subject').val();
-                $data['body'] = $('#inbox-reply-body').val();
+                $data['body'] = replyeditor.getData();
                 $data['type'] = $('#inbox-reply-modal').data('type');
                 post = $.post("/Email/SendFromPopupCompose", $data);
 
@@ -157,7 +172,7 @@
                     $("body").removeClass("loading");
                     switch(data['status']) {
                         case "OK":
-                            $('#send-popup-compose-email-employee-tab-modal').modal('hide');
+                            $('#inbox-reply-modal').modal('hide');
                             SavedSuccess('Email Sent');
                             break;
                         case "linknotfound":

@@ -43,7 +43,7 @@
                                     <div class="col-sm-12 form-group">
                                         <label for="message">
                                             Message:</label>
-                                        <textarea id="send-popup-compose-email-vendor-tab-body" class="form-control" type="textarea" name="message"  maxlength="6000" rows="7"></textarea>
+                                        <div name="send-popup-compose-email-body-vendor-tab" id="send-popup-compose-email-body-vendor-tab"></div>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -96,6 +96,19 @@
 
 <script>
     $(document).ready(function () {
+
+        ClassicEditor.create( document.querySelector('#send-popup-compose-email-body-vendor-tab'))
+            .then( editor => {
+                window.vendoreditor = editor;
+
+                $height = $('#send-popup-compose-email-body-vendor-tab').height() + 200;
+                vendoreditor.ui.view.editable.editableElement.style.height = $height + 'px';
+
+            } )
+            .catch( err => {
+                console.error( err.stack );
+            } );
+
         $('#send-popup-compose-email-vendor-tab-choose-modal').on('show.bs.modal', function (event) {
             var button  = $(event.relatedTarget); // Button that triggered the modal
             var email = button.data('mail'); // Extract info from data-* attributes
@@ -139,7 +152,7 @@
             $data['contact_type'] = "Client";
             $data['email'] = $('#send-popup-compose-email-vendor-tab-recipient').val();
             $data['subject'] = $('#send-popup-compose-email-vendor-tab-subject').val();
-            $data['body'] = $('#send-popup-compose-email-vendor-tab-body').val();
+            $data['body'] = vendoreditor.getData();
             $data['link_id'] = $('#send-popup-compose-email-vendor-tab-modal').data('link_id');
             $data['type'] = $('#send-popup-compose-email-vendor-tab-modal').data('type');
 

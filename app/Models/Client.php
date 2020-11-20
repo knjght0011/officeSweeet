@@ -7,6 +7,7 @@ use App\Models\OS\Email\Email;
 use App\Models\OS\Scheduler;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class Client extends CustomBaseModel {
     
@@ -110,6 +111,12 @@ class Client extends CustomBaseModel {
                         ->whereIn('contact_id', $array)
                         ->get();
 
+    }
+
+    public function getInboxEmails($email){
+        return Email::where('sender', $email)
+            ->where('email', Auth::user()->email)
+            ->get();
     }
 
     public function quotes()

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddSenderToEmailTable extends Migration
+class AddSenderToEmailsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,6 +15,7 @@ class AddSenderToEmailTable extends Migration
     {
         Schema::table('emails', function (Blueprint $table) {
             $table->string('sender')->default('');
+            $table->text('body')->change();
         });
     }
 
