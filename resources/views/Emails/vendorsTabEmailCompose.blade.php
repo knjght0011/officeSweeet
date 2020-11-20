@@ -107,7 +107,7 @@
             $('#send-popup-compose-email-vendor-tab-choose-modal').data('link_id', client_contact_id);
             $('#send-popup-compose-email-vendor-tab-choose-modal').data('contact_id', client_contact_id);
             $('#send-popup-compose-email-vendor-tab-choose-modal').data('recipient_id', recipient_id);
-            $('#send-popup-compose-email-vendor-tab-choose-modal').data('type', 'EmailFromPopupModalToClient');
+            $('#send-popup-compose-email-vendor-tab-choose-modal').data('type', 'EmailFromPopupModalToVendor');
         });
 
         $('#send-popup-compose-email-vendor-tab-modal').on('show.bs.modal', function (event) {

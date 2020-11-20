@@ -48,7 +48,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-12 form-group">
-                                        <button id="send-popup-compose-email-employee-tab" type="button" class="btn btn-lg btn-default pull-right" >Send →</button>
+                                        <button id="send-popup-compose-email-employee-tab-button" type="button" class="btn btn-lg btn-default pull-right" >Send →</button>
                                     </div>
                                 </div>
 
@@ -82,7 +82,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <button type="button" data-toggle='modal' data-dismiss="modal" href='#send-popup-compose-email-employee-tab-modal' id="send-popup-compose-email-employee-tab-modal-click" class="btn btn-outline-primary btn-lg btn-block">Send email from scratch</button>
+                <button type="button" data-toggle='modal' data-dismiss="modal" href='#send-popup-compose-email-employee-tab-modal' class="btn btn-outline-primary btn-lg btn-block">Send email from scratch</button>
                 <button type="button" onclick="alert('this feature not available at the present')" class="btn btn-outline-primary btn-lg btn-block">Send email from template</button>
                 <button type="button" onclick="alert('this feature not available at the present')" class="btn btn-outline-primary btn-lg btn-block">Send email campaign</button>
             </div>
@@ -106,8 +106,6 @@
             $('#send-popup-compose-email-employee-tab-choose-modal').data('link_id', client_contact_id);
             $('#send-popup-compose-email-employee-tab-choose-modal').data('contact_id', client_contact_id);
             $('#send-popup-compose-email-employee-tab-choose-modal').data('recipient_id', recipient_id);
-            $('#send-popup-compose-email-employee-tab-choose-modal').data('type', 'EmailFromPopupModalToClient');
-            console.log(button);
         });
 
         $('#send-popup-compose-email-employee-tab-modal').on('show.bs.modal', function (event) {
@@ -129,7 +127,7 @@
         $('#send-popup-compose-email-employee-tab-modal').on('hide.bs.modal', function (event) {
         });
 
-        $("#send-popup-compose-email-employee-tab").unbind().click(function()
+        $("#send-popup-compose-email-employee-tab-button").unbind().click(function()
         {
             $("body").addClass("loading");
             $data = {};
@@ -143,7 +141,6 @@
             $data['body'] = $('#send-popup-compose-email-body-employee-tab').val();
             $data['link_id'] = $('#send-popup-compose-email-employee-tab-modal').data('link_id');
             $data['type'] = $('#send-popup-compose-email-employee-tab-modal').data('type');
-
             post = $.post("/Email/SendFromPopupCompose", $data);
 
             post.done(function( data ) {

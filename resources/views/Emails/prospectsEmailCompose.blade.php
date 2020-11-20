@@ -177,5 +177,4 @@
                 NoReplyFromServer();
             });
         });
-    });
 </script>

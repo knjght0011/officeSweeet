@@ -112,7 +112,7 @@ class EmailController extends Controller
     public function list()
     {
         $email = Auth::user()->email;
-        $mails = \App\Models\OS\Email\Email::where('email', 'like', '%'.$email.'%')->orderBy('updated_at', 'asc')->get();
+        $mails = \App\Models\OS\Email\Email::where('email', 'like', '%'.$email.'%')->orderBy('updated_at', 'desc')->get();
         return View::make('Emails.Inbox.index')
             ->with('email', $email)
             ->with('mails', $mails);

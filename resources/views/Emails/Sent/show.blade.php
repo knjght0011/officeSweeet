@@ -9,7 +9,7 @@
                 From:
             </td>
             <td>
-{{--                {{ $mail->sender }}--}}
+                {{ $mail->sender }}
             </td>            
         </tr>
         <tr>
@@ -46,6 +46,8 @@
         </tr>
     </table>
 </div>
+<button type="button" onclick="alert('this feature not available at the present')" class="btn btn-outline-primary btn-lg btn-block">Forward</button>
+
 {{--<iframe id="bodyframe" style="width: 100%; min-height: 100%;" src="{{ url("/Mail/Body/" . $mail->id) }}"></iframe>--}}
 <script>
     $windowheight = $('#content').height();

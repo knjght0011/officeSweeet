@@ -21,9 +21,9 @@
 
     <div class="row" style="margin-top: 20px;">
 
-        <div style="float:left; width: 18em;  margin-left: 20px;">
-            <button style="width: 100%;" id="send" name="send" type="button" class="btn OS-Button">Send Mail</button>
-        </div>
+{{--        <div style="float:left; width: 18em;  margin-left: 20px;">--}}
+{{--            <button style="width: 100%;" id="send" name="send" type="button" class="btn OS-Button">Send Mail</button>--}}
+{{--        </div>--}}
 
         <div style="float:left; width: 18em;  margin-left: 20px;">
             <div class="input-group ">
