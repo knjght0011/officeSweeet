@@ -95,7 +95,7 @@
                    href="/Employees/View/{{ $employee1->id }}">{{ $employee1->firstname }} {{ $employee1->middlename }} {{ $employee1->lastname }}</a>
             </td>
             <td>
-                <a data-toggle="modal" href='#send-popup-compose-email-employee-tab-modal' data-recipient-id="{{$employee1->id}}" data-client-contact-id="{{$employee1->id}}" data-mail="{{$employee1->email}}" class="email">{{$employee1->email}}</a>
+                <a data-toggle="modal" href='#send-popup-compose-email-employee-tab-choose-modal' data-recipient-id="{{$employee1->id}}" data-client-contact-id="{{$employee1->id}}" data-mail="{{$employee1->email}}" class="email">{{$employee1->email}}</a>
             <td>
                 <a href="tel:{{ $employee1->phonenumber }}">{{ $employee1->phonenumber }}</a>
             </td>

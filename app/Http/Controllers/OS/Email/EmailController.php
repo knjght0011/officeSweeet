@@ -49,6 +49,7 @@ class EmailController extends Controller
         $email->contact_type = $data['contact_type'];
         $email->email = $data['email'];
         $email->linked_id = 1;
+        $email->sender = Auth::user()->email;
         $email->save();
         $email->fromEmail = Auth::user()->email;
         $email->SendPopup();

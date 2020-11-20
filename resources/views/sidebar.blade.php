@@ -38,6 +38,10 @@
                         <li><a id="Patients" href="/Patients/View"><span class="glyphicon glyphicon-heart"></span> Patients</a></li>
                     @endif
 
+                    {{--Email--}}
+                        <li id="Email" style="cursor: pointer;"><a><span class="glyphicon glyphicon-envelope"></span> Email <span id="unread" class="label label-danger">{{ \App\Helpers\MailHelper::unReadMail() }}</span><span style="padding-left: 5px" class="glyphicon glyphicon-chevron-down"></span></a></li>
+                        <li style="display: none;padding-left: 25px" id="Email-Inbox"><a href="/Email/Inbox"><span class="glyphicon glyphicon-inbox"></span> Inbox <span id="unread" class="label label-danger">{{ \App\Helpers\MailHelper::unReadInboxMail() }}</span></a></li>
+                        <li style="display: none;padding-left: 25px" id="Email-Sent"><a href="/Email/Sent"><span class="glyphicon glyphicon-send"></span> Sent <span id="unread" class="label label-danger">{{ \App\Helpers\MailHelper::unReadSentMail() }}</span></a></li>
                     @if(Auth::user()->hasPermission('scheduler_permission'))
                     <li><a id="Scheduling" href="/Scheduling/View"><span class="glyphicon glyphicon-calendar"></span> Scheduler/Calendar</a></li>
                     @endif
@@ -82,20 +86,16 @@
 
                     <li><a href="#" id="support" data-toggle="modal" data-target="#ShowHelpHub" data-tab="support" ><span class="glyphicon glyphicon-envelope"></span> Support / Feedback</a></li>
                     <li><a href="#" id="video" data-toggle="modal" data-target="#ShowHelpHub" data-tab="video" ><span class="glyphicon glyphicon-film"></span> Video Tutorials</a></li>
-
-                    <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
-
-
                     @if(app()->make('account')->subdomain === "local" || app()->make('account')->subdomain === "lls")
                         <li role="separator" class="divider"></li>
 
-                        <li><a id="link" href="/Plans/">Plans</a></li>
+                        <li><a id="link" href="/Plans/"><span class="glyphicon glyphicon-th-list"></span> Plans</a></li>
 
-                        <li><a id="link" href="/Alerts/">Alerts</a></li>
+                        <li><a id="link" href="/Alerts/"><span class="glyphicon glyphicon-alert"></span> Alerts</a></li>
 
-                        <li><a id="link" href="/Accounts/">Accounts</a></li>
-
+                        <li><a id="link" href="/Accounts/"><span class="glyphicon glyphicon-user"></span> Accounts</a></li>
                     @endif
+                        <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
                 @else
 
                     @if(Auth::user()->hasPermission('acp_subscription_permission'))
@@ -114,6 +114,20 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+        //email dropdown menu
+            var dropdown = document.getElementById("Email");
+            var emailInbox = document.getElementById("Email-Inbox");
+            var emailSent = document.getElementById("Email-Sent");
+            dropdown.addEventListener("click", function() {
+                if (emailInbox.style.display === "block") {
+                    emailInbox.style.display = "none";
+                    emailSent.style.display = "none";
+                } else {
+                    emailInbox.style.display = "block";
+                    emailSent.style.display = "block";
+                }
+            });
+
         var url = window.location;
         $('ul.nav a[href="'+ url +'"]').parent().addClass('active');
         $('ul.nav a').filter(function() {return this.href == url;}).parent().addClass('active');

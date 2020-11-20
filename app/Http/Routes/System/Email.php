@@ -36,6 +36,38 @@ Route::group(['prefix' => 'Email'], function () {
     });
 
 
+    Route::group(['prefix' => 'Inbox'], function () {
+        Route::get('/', array('uses' => 'Management\EmailController@list'));
+        Route::get('/Mail/{id}', array('uses' => 'Management\EmailController@showById'));
+
+        //Route::get('List', array('uses' => 'OS\Email\EmailTemplateController@List'));
+        Route::get('Preview/{id}', array('uses' => 'OS\Email\EmailTemplateController@Preview'));
+        Route::post('Upload', array('uses' => 'OS\Email\EmailTemplateController@UploadTemplate'));
+        Route::post('Save', array('uses' => 'OS\Email\EmailTemplateController@SaveTemplate'));
+        Route::post('Delete', array('uses' => 'OS\Email\EmailTemplateController@Delete'));
+
+
+        Route::get('New', array('uses' => 'OS\Email\EmailTemplateController@New'));
+        Route::post('ImageUpload', array('uses' => 'OS\Email\EmailTemplateController@ImageUpload'));
+
+    });
+
+    Route::group(['prefix' => 'Sent'], function () {
+        Route::get('/', array('uses' => 'Management\EmailController@sentList'));
+        Route::get('/Mail/{id}', array('uses' => 'Management\EmailController@showById'));
+
+        //Route::get('List', array('uses' => 'OS\Email\EmailTemplateController@List'));
+        Route::get('Preview/{id}', array('uses' => 'OS\Email\EmailTemplateController@Preview'));
+        Route::post('Upload', array('uses' => 'OS\Email\EmailTemplateController@UploadTemplate'));
+        Route::post('Save', array('uses' => 'OS\Email\EmailTemplateController@SaveTemplate'));
+        Route::post('Delete', array('uses' => 'OS\Email\EmailTemplateController@Delete'));
+
+
+        Route::get('New', array('uses' => 'OS\Email\EmailTemplateController@New'));
+        Route::post('ImageUpload', array('uses' => 'OS\Email\EmailTemplateController@ImageUpload'));
+
+    });
+
     //Route::post('Quote', array('uses' => 'OS\Email\EmailController@EmailQuote'));
     //Route::post('InvoiceReminders', array('uses' => 'OS\Email\EmailController@EmailInvoices'));
     //Route::post('Support', array('uses' => 'OS\Email\EmailController@EmailSupport'));

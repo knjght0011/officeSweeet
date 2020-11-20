@@ -184,7 +184,7 @@
                 { "data": "firstname", "name": "vendorcontacts.firstname", "searchable": true  },
                 { "data": "lastname", "name": "vendorcontacts.lastname", "searchable": true  },
                 { "data": "phonenumber", "name": "vendorcontacts.officenumber", "searchable": false, "orderable": false, "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) { if(oData.phone_number_raw == 'None'){$(nTd).html("No Primary Contact Set");}else{$(nTd).html("<a href='tel:"+oData.phone_number_raw+"'>"+oData.phone_number+"</a>");}}},
-                { "data": "email", "name":"vendorcontacts.email", "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) { $(nTd).html("<a data-toggle='modal' href='#send-popup-compose-email-vendor-tab-modal' data-recipient-id='"+oData.id+"' data-client-contact-id='"+oData.primarycontact_id+"' data-mail='"+oData.email+"' class='email'>"+oData.email+"</a>");}},
+                { "data": "email", "name":"vendorcontacts.email", "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) { $(nTd).html("<a data-toggle='modal' href='#send-popup-compose-email-vendor-tab-choose-modal' data-recipient-id='"+oData.id+"' data-client-contact-id='"+oData.primarycontact_id+"' data-mail='"+oData.email+"' class='email'>"+oData.email+"</a>");}},
                 // { "data": "email", "name":"vendorcontacts.email", "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) { $(nTd).html("<a href='mailto:"+oData.email+"'>"+oData.email+"</a>");}},
                 { "data": "number", "name": 'address.number', "searchable": true},
                 { "data": "address1", "name": 'address.address1', "searchable": true},

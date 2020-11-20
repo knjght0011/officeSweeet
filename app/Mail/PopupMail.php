@@ -16,9 +16,9 @@ class PopupMail extends Mailable
      *
      * @return void
      */
-    public function __construct($fromEmail, $subject, $body, $attachment, $type = "File", $email_id = 0, $token = null)
+    public function __construct($sender, $subject, $body, $attachment, $type = "File", $email_id = 0, $token = null)
     {
-        $this->fromEmail = $fromEmail;
+        $this->sender = $sender;
         $this->subject = $subject;
         $this->body = $body;
         $this->attachment = $attachment;
@@ -46,7 +46,7 @@ class PopupMail extends Mailable
                 ->addTextHeader('X-Mailgun-Variables', '{"subdomain": "'. $subdomain .'", "message_id": "' . $this->email_id . '", "message_type": "' . $this->type . '"}');
 
         });
-        return $this->from($this->fromEmail,'OfficeSweet: '.$this->fromEmail)
+        return $this->from($this->sender,'OfficeSweet: '.$this->sender)
             ->view('Emails.Customer.file' , ['body' => $this->body, 'token' => $this->token])
             ->subject($this->subject)
             ->attachData($this->attachment ,$this->type . ".pdf" , [

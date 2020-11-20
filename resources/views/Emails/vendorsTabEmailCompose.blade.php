@@ -71,14 +71,49 @@
     </div>
 </div>
 
+<!-- Choose send mail method -->
+<div class="modal fade bd-example-modal-sm" id="send-popup-compose-email-vendor-tab-choose-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="exampleModalLabel" style="float:left">Please choose an action:</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="float:right">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <button type="button" data-toggle='modal' data-dismiss="modal" href='#send-popup-compose-email-vendor-tab-modal' id="send-popup-compose-email-vendor-tab-modal-click" class="btn btn-outline-primary btn-lg btn-block">Send email from scratch</button>
+                <button type="button" onclick="alert('this feature not available at the present')" class="btn btn-outline-primary btn-lg btn-block">Send email from template</button>
+                <button type="button" onclick="alert('this feature not available at the present')" class="btn btn-outline-primary btn-lg btn-block">Send email campaign</button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <script>
     $(document).ready(function () {
-        $('#send-popup-compose-email-vendor-tab-modal').on('show.bs.modal', function (event) {
+        $('#send-popup-compose-email-vendor-tab-choose-modal').on('show.bs.modal', function (event) {
             var button  = $(event.relatedTarget); // Button that triggered the modal
             var email = button.data('mail'); // Extract info from data-* attributes
             var client_contact_id = button.data('client-contact-id'); // Extract info from data-* attributes
             var recipient_id = button.data('recipient-id'); // Extract info from data-* attributes
-            console.log(email);
+            // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+            // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+            $('#send-popup-compose-email-vendor-tab-choose-modal').data('email', email);
+            $('#send-popup-compose-email-vendor-tab-choose-modal').data('link_id', client_contact_id);
+            $('#send-popup-compose-email-vendor-tab-choose-modal').data('contact_id', client_contact_id);
+            $('#send-popup-compose-email-vendor-tab-choose-modal').data('recipient_id', recipient_id);
+            $('#send-popup-compose-email-vendor-tab-choose-modal').data('type', 'EmailFromPopupModalToClient');
+        });
+
+        $('#send-popup-compose-email-vendor-tab-modal').on('show.bs.modal', function (event) {
+            var email =  $('#send-popup-compose-email-vendor-tab-choose-modal').data('email');
+            var client_contact_id = $('#send-popup-compose-email-vendor-tab-choose-modal').data('contact_id');
+            var recipient_id = $('#send-popup-compose-email-vendor-tab-choose-modal').data('recipient_id');
             // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
             // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
             $("#send-popup-compose-email-vendor-tab-recipient").val(email);

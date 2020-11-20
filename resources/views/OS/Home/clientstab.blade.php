@@ -219,7 +219,7 @@
                 { "data": "firstname", "name": "clientcontacts.firstname", "searchable": true  },
                 { "data": "lastname", "name": "clientcontacts.lastname", "searchable": true  },
                 { "data": "phone_number", "name": "clientcontacts.officenumber", "searchable": false, "orderable": false, "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) { if(oData.phone_number_raw == 'None'){$(nTd).html("No Primary Contact Set");}else{$(nTd).html("<a href='tel:"+oData.phone_number_raw+"'>"+oData.phone_number+"</a>");}}},
-                    { "data": "email", "name":"clientcontacts.email", "searchable": false, "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) { $(nTd).html("<a data-toggle='modal' href='#send-popup-compose-email-client-tab-modal' data-recipient-id='"+oData.id+"' data-client-contact-id='"+oData.primarycontact_id+"' data-mail='"+oData.email+"' class='email'>"+oData.email+"</a>");}},
+                    { "data": "email", "name":"clientcontacts.email", "searchable": false, "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) { $(nTd).html("<a data-toggle='modal' href='#send-popup-compose-email-client-tab-choose-modal' data-recipient-id='"+oData.id+"' data-client-contact-id='"+oData.primarycontact_id+"' data-mail='"+oData.email+"' class='email'>"+oData.email+"</a>");}},
                     @if(app()->make('account')->subdomain === "lls")
                 { "data": "acctive_date", "searchable": false, "orderable": false },
                     @endif

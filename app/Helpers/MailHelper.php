@@ -1,6 +1,7 @@
 <?php
 namespace App\Helpers;
 #facades
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 #helpers
 use App\Helpers\AccountHelper;
@@ -78,5 +79,42 @@ class MailHelper
 
             AccountHelper::Deelevate();
         }
+    }
+
+    public static function unReadMail(){
+
+        $count = 0;
+        $email = Auth::user()->email;
+        $mails = \App\Models\OS\Email\Email::where('email', 'like', '%'.$email.'%')->orWhere('sender', 'like', '%'.$email.'%')->orderBy('updated_at', 'desc')->get();
+        foreach($mails as $mail){
+            if((string)$mail->created_at === (string)$mail->updated_at){
+                    $count = $count + 1;
+            }
+        }
+
+        return $count;
+
+    }
+    public static function unReadInboxMail(){
+        $count = 0;
+        $email = Auth::user()->email;
+        $mails = \App\Models\OS\Email\Email::where('email', 'like', '%'.$email.'%')->orderBy('updated_at', 'desc')->get();
+        foreach($mails as $mail){
+            if((string)$mail->created_at === (string)$mail->updated_at){
+                    $count = $count + 1;
+            }
+        }
+        return $count;
+    }
+    public static function unReadSentMail(){
+        $count = 0;
+        $email = Auth::user()->email;
+        $mails = \App\Models\OS\Email\Email::where('sender', 'like', '%'.$email.'%')->orderBy('updated_at', 'desc')->get();
+        foreach($mails as $mail){
+            if((string)$mail->created_at === (string)$mail->updated_at){
+                    $count = $count + 1;
+            }
+        }
+        return $count;
     }
 }

@@ -109,6 +109,32 @@ class EmailController extends Controller
         }
     }    
     
+    public function list()
+    {
+        $email = Auth::user()->email;
+        $mails = \App\Models\OS\Email\Email::where('email', 'like', '%'.$email.'%')->orderBy('updated_at', 'asc')->get();
+        return View::make('Emails.Inbox.index')
+            ->with('email', $email)
+            ->with('mails', $mails);
+    }
+
+    public function sentList()
+    {
+        $email = Auth::user()->email;
+        $mails = \App\Models\OS\Email\Email::where('sender', 'like', '%'.$email.'%')->orderBy('updated_at', 'asc')->get();
+        return View::make('Emails.Sent.index')
+            ->with('email', $email)
+            ->with('mails', $mails);
+    }
+
+    public function showById($subdomain, $id)
+    {
+        $mail = \App\Models\OS\Email\Email::find($id);
+        $mail->touch();
+        return View::make('Emails.Inbox.show')
+            ->with('mail', $mail);
+    }
+
     public function index($subdomain, $email)
     {
         #$users = User::all();
