@@ -41,7 +41,7 @@
                     Body:
                 </td>
                 <td>
-                    {{$mail->body}}
+                    {!! $mail->body !!}
                 </td>
             </tr>
         </table>

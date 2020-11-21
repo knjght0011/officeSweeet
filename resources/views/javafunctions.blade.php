@@ -279,6 +279,10 @@ function GoToPage($link) {
     link.click();    
 }
 
+function GoToInboxPage($link) {
+    window.open("/Email/Inbox/Mail/" + $link);
+}
+
 function GoToPageNewTabClient($link) {
     window.open("/Clients/View/"+ $link + '?type=file&child=mail');
     window.open("/Clients/View/"+ $link + '#emails');}
