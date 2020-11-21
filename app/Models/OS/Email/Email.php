@@ -150,6 +150,10 @@ class Email extends Model
 
         switch ($this->type) {
 
+            case "ReplyEmail":
+                $this->SendPopupMail();
+                break;
+
             case "EmailFromPopupModalToClient":
                 $this->SendPopupMail();
                 break;

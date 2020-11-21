@@ -232,6 +232,10 @@
                 case "link":
                     GoToPage($note['link']);
                     break;
+                case "ReplyEmailFrom":
+                    GoToInboxPage($note['link']);
+                    break;
+
                 case "popupModalToClient":
                     GoToPageNewTabClient($note['link']);
                     break;
@@ -240,6 +244,15 @@
                     break;
                 case "popupModalToEmployee":
                     GoToPageNewTabEmployee($note['link']);
+                    break;
+                case "popupModalFromClient":
+                    GoToInboxPage($note['link']);
+                    break;
+                case "popupModalFromVendor":
+                    GoToInboxPage($note['link']);
+                    break;
+                case "popupModalFromEmployee":
+                    GoToInboxPage($note['link']);
                     break;
                 default:
                     $.dialog({

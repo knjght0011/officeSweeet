@@ -57,23 +57,23 @@ class EmailController extends Controller
         if($email->type === 'ReplyEmail')
         {
             NotificationHelper::CreateNotification('Your reply email has sent to '.$data['email'], 'Description: Your email has sent.', $data['recipient_id'], 'ReplyEmailTo', Auth::user()->id);
-            if($recipient->id)NotificationHelper::CreateNotification('You have new reply email from '.Auth::user()->email, 'Description: You have new reply email!.', Auth::user()->id, 'popupModalFromClient', $recipient->id);
+            if($recipient)NotificationHelper::CreateNotification('You have new reply email from '.Auth::user()->email, 'Description: You have new reply email!.', $email->id, 'ReplyEmailFrom', $recipient->id);
         }
         if($email->type === 'EmailFromPopupModalToClient')
         {
             NotificationHelper::CreateNotification('Your email has sent to Client '.$data['email'], 'Description: Your email has sent.', $data['recipient_id'], 'popupModalToClient', Auth::user()->id);
-            if($recipient->id)NotificationHelper::CreateNotification('You have new email from '.Auth::user()->email, 'Description: You have new email!.', Auth::user()->id, 'popupModalFromClient', $recipient->id);
+            if($recipient)NotificationHelper::CreateNotification('You have new email from '.Auth::user()->email, 'Description: You have new email!.', $email->id, 'popupModalFromClient', $recipient->id);
         }
         if($email->type === 'EmailFromPopupModalToVendor')
         {
             NotificationHelper::CreateNotification('Your email has sent to Vendor '.$data['email'], 'Description: Your email has sent.', $data['recipient_id'], 'popupModalToVendor', Auth::user()->id);
-            if($recipient->id)NotificationHelper::CreateNotification('You have new email from '.Auth::user()->email, 'Description: You have new email!.', Auth::user()->id, 'popupModalFromVendor', $recipient->id);
+            if($recipient)NotificationHelper::CreateNotification('You have new email from '.Auth::user()->email, 'Description: You have new email!.', $email->id, 'popupModalFromVendor', $recipient->id);
         }
        // Send Notifications To Employee
         if($email->type === 'EmailFromPopupModalToEmployee')
         {
             NotificationHelper::CreateNotification('Your email has sent to Employee '.$data['email'], 'Description: Your email has sent.', $data['recipient_id'], 'popupModalToEmployee', Auth::user()->id);
-            if($recipient->id)NotificationHelper::CreateNotification('You have new email from '.Auth::user()->email, 'Description: You have new email!.', Auth::user()->id, 'popupModalFromEmployee', $recipient->id);
+            if($recipient)NotificationHelper::CreateNotification('You have new email from '.Auth::user()->email, 'Description: You have new email!.', $email->id, 'popupModalFromEmployee', $recipient->id);
         }
        return ['status' => 'OK'];
 

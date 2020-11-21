@@ -62,8 +62,8 @@
                 <tr>
                     @endif
                     <td><a href="/Email/Inbox/Mail/{{ $mail->id }}">{{ $mail->sender }}</a></td>
-                    <td><a href="/Email/Inbox/Mail/{{ $mail->id }}">{{ $mail->subject }}</a></td>
-                    <td>{{ $mail->body }}</td>
+                    <td><a href="/Email/Inbox/Mail/{{ $mail->id }}">{!! str_limit(strip_tags($mail->subject),30) !!}</a></td>
+                    <td>{!! str_limit(strip_tags($mail->body),7) !!}</td>
                     <td>{{ $mail->created_at }}</td>
                 </tr>
                 @endforeach
