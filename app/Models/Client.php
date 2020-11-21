@@ -100,22 +100,28 @@ class Client extends CustomBaseModel {
         return $this->hasMany('App\Models\OS\Templates\Signing', 'client_id', 'id');
     }
 
-    public function getEmails(){
+    public function getEmails($email){
+//
+//        $array = [];
+//        foreach($this->contacts as $contact){
+//            array_push($array, $contact->id);
+//        }
 
-        $array = [];
-        foreach($this->contacts as $contact){
-            array_push($array, $contact->id);
-        }
-
-        return Email::where('contact_type', 'Client')
-                        ->whereIn('contact_id', $array)
-                        ->get();
-
+//        return Email::where('contact_type', 'Client')
+//                        ->whereIn('contact_id', $array)
+//                        ->get();
+        $emailType = ['ReplyEmail','EmailFromPopupModalToClient','EmailFromPopupModalToEmployee','EmailFromPopupModalToVendor'];
+        return Email::where('email', $email)
+            ->where('sender', Auth::user()->email)
+            ->whereIn('type',$emailType)
+            ->get();
     }
 
     public function getInboxEmails($email){
+        $emailType = ['ReplyEmail','EmailFromPopupModalToClient','EmailFromPopupModalToEmployee','EmailFromPopupModalToVendor'];
         return Email::where('sender', $email)
             ->where('email', Auth::user()->email)
+            ->whereIn('type',$emailType)
             ->get();
     }
 

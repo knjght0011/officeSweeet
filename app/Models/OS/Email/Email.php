@@ -116,18 +116,6 @@ class Email extends Model
                 $this->SendNotification();
                 break;
 
-            case "EmailFromPopupModalToClient":
-                $this->SendNotification();
-                break;
-
-            case "EmailFromPopupModalToEmployee":
-                $this->SendNotification();
-                break;
-
-            case "EmailFromPopupModalToVendor":
-                $this->SendNotification();
-                break;
-
             case "SignedDocument":
                 $this->SendFile();
                 break;

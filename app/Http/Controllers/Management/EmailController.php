@@ -112,7 +112,10 @@ class EmailController extends Controller
     public function list()
     {
         $email = Auth::user()->email;
-        $mails = \App\Models\OS\Email\Email::where('email', 'like', '%'.$email.'%')->orderBy('updated_at', 'desc')->get();
+        $emailType = ['ReplyEmail','EmailFromPopupModalToClient','EmailFromPopupModalToEmployee','EmailFromPopupModalToVendor'];
+        $mails = \App\Models\OS\Email\Email::where('email', 'like', '%'.$email.'%')
+            ->whereIn('type',$emailType)
+            ->orderBy('updated_at', 'desc')->get();
         return View::make('Emails.Inbox.index')
             ->with('email', $email)
             ->with('mails', $mails);
@@ -121,7 +124,10 @@ class EmailController extends Controller
     public function sentList()
     {
         $email = Auth::user()->email;
-        $mails = \App\Models\OS\Email\Email::where('sender', 'like', '%'.$email.'%')->orderBy('updated_at', 'asc')->get();
+        $emailType = ['ReplyEmail','EmailFromPopupModalToClient','EmailFromPopupModalToEmployee','EmailFromPopupModalToVendor'];
+        $mails = \App\Models\OS\Email\Email::where('sender', 'like', '%'.$email.'%')
+            ->whereIn('type',$emailType)
+            ->orderBy('updated_at', 'desc')->get();
         return View::make('Emails.Sent.index')
             ->with('email', $email)
             ->with('mails', $mails);
@@ -132,6 +138,14 @@ class EmailController extends Controller
         $mail = \App\Models\OS\Email\Email::find($id);
         $mail->touch();
         return View::make('Emails.Inbox.show')
+            ->with('mail', $mail);
+    }
+
+    public function sentShowById($subdomain, $id)
+    {
+        $mail = \App\Models\OS\Email\Email::find($id);
+        $mail->touch();
+        return View::make('Emails.Sent.show')
             ->with('mail', $mail);
     }
 

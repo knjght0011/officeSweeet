@@ -33,7 +33,10 @@
         </tr>
     </tfoot>
     <tbody>
-        @foreach($client->getEmails() as $email)
+    @php
+        $email = $client->email?$client->email:$client->primarycontact->email
+    @endphp
+        @foreach($client->getEmails($email) as $email)
             <tr>
                 <td>{{ preg_replace('/(?<!\ )[A-Z]/', ' $0', $email->type) }}</td>
                 <td>{{ $email->Status() }}</td>

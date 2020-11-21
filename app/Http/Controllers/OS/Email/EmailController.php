@@ -7,7 +7,9 @@ use App\Helpers\OS\NotificationHelper;
 use App\Http\Controllers\Controller;
 
 use App\Mail\EmailNotification;
+use App\Models\ClientContact;
 use App\Models\User;
+use App\Models\VendorContact;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Input;
@@ -39,12 +41,26 @@ class EmailController extends Controller
             'link_id' => Input::get('link_id'),
             'type' => Input::get('type'),
         );
-
+        $contact = ClientContact::where('email', $data['email'])->first();
+        //get contact_id from email if not sent
+        if (!$data['contact_id']) {
+            $contact = VendorContact::where('email', $data['email'])->first();
+            if ($contact)
+                $contact_id = 'vendor.'.$contact->id;
+            $contact = User::where('email', $data['email'])->first();
+            if ($contact)
+                $contact_id = 'user.'.$contact->id;
+            $contact = ClientContact::where('email', $data['email'])->first();
+            if ($contact)
+                $contact_id = $contact->id;
+        } else {
+            $contact_id = $data['contact_id'];
+        }
         $email = new Email;
         $email->subject = $data['subject'];
         $email->body = $data['body'];
         $email->type = $data['type'];
-        $email->contact_id = $data['contact_id'];
+        $email->contact_id = $contact_id;
         $email->contact_type = $data['contact_type'];
         $email->email = $data['email'];
         $email->linked_id = 1;
@@ -52,30 +68,26 @@ class EmailController extends Controller
         $email->save();
         $email->SendPopup();
         //Get recipient_id
-        $recipient = User::where('email',$data['email'])->first();
+        $recipient = User::where('email', $data['email'])->first();
         // Send Notifications To Client
-        if($email->type === 'ReplyEmail')
-        {
-            NotificationHelper::CreateNotification('Your reply email has sent to '.$data['email'], 'Description: Your email has sent.', $data['recipient_id'], 'ReplyEmailTo', Auth::user()->id);
-            if($recipient)NotificationHelper::CreateNotification('You have new reply email from '.Auth::user()->email, 'Description: You have new reply email!.', $email->id, 'ReplyEmailFrom', $recipient->id);
+        if ($email->type === 'ReplyEmail') {
+            NotificationHelper::CreateNotification('Your reply email has sent to ' . $data['email'], 'Description: Your email has sent.', $data['recipient_id'], 'ReplyEmailTo', Auth::user()->id);
+            if ($recipient) NotificationHelper::CreateNotification('You have new reply email from ' . Auth::user()->email, 'Description: You have new reply email!.', $email->id, 'ReplyEmailFrom', $recipient->id);
         }
-        if($email->type === 'EmailFromPopupModalToClient')
-        {
-            NotificationHelper::CreateNotification('Your email has sent to Client '.$data['email'], 'Description: Your email has sent.', $data['recipient_id'], 'popupModalToClient', Auth::user()->id);
-            if($recipient)NotificationHelper::CreateNotification('You have new email from '.Auth::user()->email, 'Description: You have new email!.', $email->id, 'popupModalFromClient', $recipient->id);
+        if ($email->type === 'EmailFromPopupModalToClient') {
+            NotificationHelper::CreateNotification('Your email has sent to Client ' . $data['email'], 'Description: Your email has sent.', $data['recipient_id'], 'popupModalToClient', Auth::user()->id);
+            if ($recipient) NotificationHelper::CreateNotification('You have new email from ' . Auth::user()->email, 'Description: You have new email!.', $email->id, 'popupModalFromClient', $recipient->id);
         }
-        if($email->type === 'EmailFromPopupModalToVendor')
-        {
-            NotificationHelper::CreateNotification('Your email has sent to Vendor '.$data['email'], 'Description: Your email has sent.', $data['recipient_id'], 'popupModalToVendor', Auth::user()->id);
-            if($recipient)NotificationHelper::CreateNotification('You have new email from '.Auth::user()->email, 'Description: You have new email!.', $email->id, 'popupModalFromVendor', $recipient->id);
+        if ($email->type === 'EmailFromPopupModalToVendor') {
+            NotificationHelper::CreateNotification('Your email has sent to Vendor ' . $data['email'], 'Description: Your email has sent.', $data['recipient_id'], 'popupModalToVendor', Auth::user()->id);
+            if ($recipient) NotificationHelper::CreateNotification('You have new email from ' . Auth::user()->email, 'Description: You have new email!.', $email->id, 'popupModalFromVendor', $recipient->id);
         }
-       // Send Notifications To Employee
-        if($email->type === 'EmailFromPopupModalToEmployee')
-        {
-            NotificationHelper::CreateNotification('Your email has sent to Employee '.$data['email'], 'Description: Your email has sent.', $data['recipient_id'], 'popupModalToEmployee', Auth::user()->id);
-            if($recipient)NotificationHelper::CreateNotification('You have new email from '.Auth::user()->email, 'Description: You have new email!.', $email->id, 'popupModalFromEmployee', $recipient->id);
+        // Send Notifications To Employee
+        if ($email->type === 'EmailFromPopupModalToEmployee') {
+            NotificationHelper::CreateNotification('Your email has sent to Employee ' . $data['email'], 'Description: Your email has sent.', $data['recipient_id'], 'popupModalToEmployee', Auth::user()->id);
+            if ($recipient) NotificationHelper::CreateNotification('You have new email from ' . Auth::user()->email, 'Description: You have new email!.', $email->id, 'popupModalFromEmployee', $recipient->id);
         }
-       return ['status' => 'OK'];
+        return ['status' => 'OK'];
 
     }
 
@@ -290,6 +302,14 @@ class EmailController extends Controller
                         ->with('body', $email->body)
                         ->with('token', $email->token);
 
+
+                case "ReplyEmail":
+                case "EmailFromPopupModalToClient":
+                case "EmailFromPopupModalToEmployee":
+                case "EmailFromPopupModalToVendor":
+
+                    return View::make('Emails.Popup.preview')
+                        ->with('content', $email->body);
 
                 case "Invoice":
 

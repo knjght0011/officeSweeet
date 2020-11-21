@@ -92,10 +92,162 @@
         </div>
     </div>
 </div>
+@include('Emails.ckEditorStyle')
+@php
+    $clours = array(    'Red',
+                        'Orange',
+                        'Yellow',
+                        'Green',
+                        'Blue',
+                        'Purple',
+                        'Brown',
+                        'Magenta',
+                        'Tan',
+                        'Cyan',
+                        'Olive',
+                        'Maroon',
+                        'Navy',
+                        'Aquamarine',
+                        'Turquoise',
+                        'Silver',
+                        'Lime',
+                        'Teal',
+                        'Indigo',
+                        'Violet',
+                        'Pink',
+                        'Black',
+                        'White',
+                        'Gray');
 
+@endphp
 <script>
     $(document).ready(function () {
-        ClassicEditor.create( document.querySelector('#send-popup-compose-email-body-client-tab'))
+        ClassicEditor.create( document.querySelector('#send-popup-compose-email-body-client-tab'), {
+            image: {
+                // You need to configure the image toolbar, too, so it uses the new style buttons.
+                toolbar: [ 'imageTextAlternative', '|', 'imageStyle:alignLeft', 'imageStyle:Full', 'imageStyle:alignRight' ],
+                styles: [
+                    // This option is equal to a situation where no style is applied.
+                    'full',
+
+                    // This represents an image aligned to the left.
+                    'alignLeft',
+
+                    // This represents an image aligned to the right.
+                    'alignRight'
+                ]
+            },
+            ckfinder: {
+                uploadUrl: '/FileStore/CKEditor'
+            },
+            highlight: {
+                options: [
+                        @foreach($clours as $clour)
+                    {
+                        model: '{{ $clour }}Pen',
+                        class: 'pen-{{ $clour }}',
+                        title: '{{ $clour }} marker',
+                        color: '{{ $clour }}',
+                        type: 'pen'
+                    },
+                    @endforeach
+                ]
+            },
+            fontFamily: {
+                options: [
+                    'default',
+                    'Alegreya Sans',
+                    'Alegreya',
+                    'Arial',
+                    'BioRhyme',
+                    'Black Ops One',
+                    'Bungee Shade',
+                    'Bungee',
+                    'Cabin',
+                    'Calligraffitti',
+                    'Charmonman',
+                    'Courier New',
+                    'Creepster',
+                    'Dancing Script',
+                    'Ewert',
+                    'Fredericka the Great',
+                    'Fruktur',
+                    'Georgia',
+                    'Gravitas One',
+                    'Homemade Apple',
+                    'IBM Plex Mono',
+                    'IBM Plex Sans Condensed',
+                    'IBM Plex Sans',
+                    'IBM Plex Serif',
+                    'Inconsolata',
+                    'Indie Flower',
+                    'Italianno',
+                    'Loved by the King',
+                    'Lucida Sans Unicode',
+                    'Merriweather Sans',
+                    'Merriweather',
+                    'Monoton',
+                    'Nanum Brush Script',
+                    'Nanum Pen Script',
+                    'Nunito Sans',
+                    'Nunito',
+                    'Pacifico',
+                    'Quattrocento Sans',
+                    'Quattrocento',
+                    'Quicksand',
+                    'Roboto Mono',
+                    'Roboto Slab',
+                    'Roboto',
+                    'Rubik',
+                    'Satisfy',
+                    'Tahoma',
+                    'Times New Roman',
+                    'Trebuchet MS',
+                    'Ubuntu',
+                    'Verdana',
+                    'VT323',
+                ]
+            },
+            toolbar: [
+                'heading',
+                '|',
+                'alignment',
+                'fontSize',
+                'fontFamily',
+                'Highlight',
+                'bold',
+                'italic',
+                'underline',
+                'strikethrough',
+                'code',
+                'bulletedList',
+                'numberedList',
+                'imageUpload',
+                'blockQuote',
+                'insertTable',
+                'undo',
+                'redo'
+            ],
+            heading: {
+                options: [
+                    { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
+                    { model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading_heading1' },
+                    { model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' },
+                    {
+                        model: 'headingFancy',
+                        view: {
+                            name: 'h2',
+                            classes: 'fancy'
+                        },
+                        title: 'Heading 2 (fancy)',
+                        class: 'ck-heading_heading2_fancy',
+
+                        // It needs to be converted before the standard 'heading2'.
+                        converterPriority: 'high'
+                    }
+                ]
+            }
+        } )
             .then( editor => {
                 window.clienteditor = editor;
 

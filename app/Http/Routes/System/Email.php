@@ -54,7 +54,7 @@ Route::group(['prefix' => 'Email'], function () {
 
     Route::group(['prefix' => 'Sent'], function () {
         Route::get('/', array('uses' => 'Management\EmailController@sentList'));
-        Route::get('/Mail/{id}', array('uses' => 'Management\EmailController@showById'));
+        Route::get('/Mail/{id}', array('uses' => 'Management\EmailController@sentShowById'));
 
         //Route::get('List', array('uses' => 'OS\Email\EmailTemplateController@List'));
         Route::get('Preview/{id}', array('uses' => 'OS\Email\EmailTemplateController@Preview'));
