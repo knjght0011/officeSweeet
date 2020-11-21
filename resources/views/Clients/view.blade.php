@@ -11,7 +11,8 @@
             <div class="col-md-12" style="font-size: large !important;">Tel: <a href="tel:{{ $client->phonenumber }}">{{ $client->phonenumber }}</a></div>
         </div>
         <div class="row">
-            <div class="col-md-12" style="font-size: large !important;">E-mail: <a href="mailto:{{ $client->email }}">{{ $client->email }}</a></div>
+            <div class="col-md-12" style="font-size: large !important;">E-mail: <a data-toggle='modal' href="#client-view-compose-mail-choose-modal">{{ $client->email }}</a></div>
+{{--            <div class="col-md-12" style="font-size: large !important;">E-mail: <a href="mailto:{{ $client->email }}">{{ $client->email }}</a></div>--}}
         </div>
         </div>
         <div class="col-md-4">
@@ -238,8 +239,196 @@
     </div>
 </div>
 
+<div class="modal fade" id="client-view-compose-mail" tabindex="-1" role="dialog" aria-labelledby="ShowClientViewComposeMail"
+     aria-hidden="true">
+    <div class="modal-dialog small-custom-modal-dialog" role="document"
+         style="
+     position: fixed;
+     bottom: 10px;
+     right: 10px;
+     margin: 10px;
+}">
+        <div class="modal-content small-custom-modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" style="float: left">New Email</h2>
+                <button type="button" class="close" style="float: right" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div style="height: 99%;" class="modal-body">
+                <div class="tab-content" style="height: 100%">
+                    <div class="row">
+                        <div class="col-md-12" id="form_container">
+                            <form role="form" method="post" id="compose-mail-clients-tab">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="form-group error" style="color: #8c001a;font-weight: 400">&nbsp;
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12 form-group">
+                                        <label for="recipient">
+                                            Recipient:</label>
+                                        <input disabled id="client-view-compose-mail-recipient" type="text" class="form-control" id="recipient" name="recipient" required>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12 form-group">
+                                        <label for="subject">
+                                            Subject:</label>
+                                        <input id="client-view-compose-mail-subject" type="text" class="form-control"  name="subject" required>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12 form-group">
+                                        <label for="message">
+                                            Message:</label>
+                                        <div name="client-view-compose-mail-body" id="client-view-compose-mail-body"></div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12 form-group">
+                                        <button id="client-view-compose-mail-button" type="button" class="btn btn-lg btn-default pull-right" >Send →</button>
+                                    </div>
+                                </div>
+
+                            </form>
+                            <div id="success_message" style="width:100%; height:100%; display:none; ">
+                                <h3>Posted your message successfully!</h3>
+                            </div>
+                            <div id="error_message"
+                                 style="width:100%; height:100%; display:none; ">
+                                <h3>Error</h3>
+                                Sorry there was an error sending your form.
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Choose send mail method -->
+<div class="modal fade bd-example-modal-sm" id="client-view-compose-mail-choose-modal" tabindex="-1" role="dialog" aria-labelledby="client-view-compose-mail-choose-modal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="exampleModalLabel" style="float:left">Please choose an action:</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="float:right">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <button type="button" data-toggle='modal' data-dismiss="modal" href='#client-view-compose-mail' id="client-view-compose-mail-click" class="btn btn-outline-primary btn-lg btn-block">Send email from scratch</button>
+                <button type="button" onclick="alert('this feature not available at the present')" class="btn btn-outline-primary btn-lg btn-block">Send email from template</button>
+                <button type="button" onclick="alert('this feature not available at the present')" class="btn btn-outline-primary btn-lg btn-block">Send email campaign</button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
 $(document).ready(function() {
+
+    //body
+    ClassicEditor.create( document.querySelector('#client-view-compose-mail-body'))
+        .then( editor => {
+            window.clientvieweditor = editor;
+
+            $height = $('#client-view-compose-mail-body').height() + 200;
+            clientvieweditor.ui.view.editable.editableElement.style.height = $height + 'px';
+
+        } )
+        .catch( err => {
+            console.error( err.stack );
+        } );
+
+    //choose modal
+    $('#client-view-compose-mail-choose-modal').on('show.bs.modal', function (event) {
+        var button  = $(event.relatedTarget); // Button that triggered the modal
+        var email = button.data('mail'); // Extract info from data-* attributes
+        var client_contact_id = button.data('client-contact-id'); // Extract info from data-* attributes
+        var recipient_id = button.data('recipient-id'); // Extract info from data-* attributes
+        // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+        // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+        $('#client-view-compose-mail-choose-modal').data('email', email);
+        $('#client-view-compose-mail-choose-modal').data('link_id', client_contact_id);
+        $('#client-view-compose-mail-choose-modal').data('contact_id', client_contact_id);
+        $('#client-view-compose-mail-choose-modal').data('recipient_id', recipient_id);
+        $('#client-view-compose-mail-choose-modal').data('type', 'EmailFromPopupModalToClient');
+    });
+
+    $('#client-view-compose-mail').on('show.bs.modal', function (event) {
+        var email = '<?php echo $client->email?>';
+        var client_contact_id = $('#client-view-compose-mail-choose-modal').data('contact_id');
+        var recipient_id = $('#client-view-compose-mail-choose-modal').data('recipient_id');
+        // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+        // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+        $("#client-view-compose-mail-recipient").val(email);
+        $("#client-view-compose-mail-subject").val('');
+        $("#client-view-compose-mail-body").val('');
+        $('#client-view-compose-mail').data('link_id', client_contact_id);
+        $('#client-view-compose-mail').data('contact_id', client_contact_id);
+        $('#client-view-compose-mail').data('recipient_id', recipient_id);
+        $('#client-view-compose-mail').data('type', 'EmailFromPopupModalToClient');
+    });
+
+    $("#client-view-compose-mail-button").unbind().click(function()
+    {
+        $("body").addClass("loading");
+        $data = {};
+        $data['_token'] = "{{ csrf_token() }}";
+
+        $data['contact_id'] = $('#client-view-compose-mail').data('contact_id');
+        $data['recipient_id'] = $('#client-view-compose-mail').data('recipient_id');
+        $data['contact_type'] = "Client";
+        $data['email'] = $('#client-view-compose-mail-recipient').val();
+        $data['subject'] = $('#client-view-compose-mail-subject').val();
+        $data['body'] = clientvieweditor.getData();
+        $data['link_id'] = $('#client-view-compose-mail').data('link_id');
+        $data['type'] = $('#client-view-compose-mail').data('type');
+        post = $.post("/Email/SendFromPopupCompose", $data);
+
+        post.done(function( data ) {
+            $("body").removeClass("loading");
+            switch(data['status']) {
+                case "OK":
+                    $('#client-view-compose-mail').modal('hide');
+                    SavedSuccess('Email Sent');
+                    break;
+                case "linknotfound":
+                    console.log("Link Not Found");
+                    $.dialog({
+                        title: 'Oops...',
+                        content: 'Unknown Response from server. Please refresh the page and try again.'
+                    });
+                    break;
+                case "disabled":
+                    $.dialog({
+                        title: 'Oops...',
+                        content: 'This has been disabled during the live demo.'
+                    });
+                    break;
+                default:
+                    console.log(data);
+                    $.dialog({
+                        title: 'Oops...',
+                        content: 'Unknown Response from server. Please refresh the page and try again.'
+                    });
+            }
+        });
+
+        post.fail(function() {
+            NoReplyFromServer();
+        });
+    });
 
     $('title').html('OS - {{ TextHelper::GetText("Client") }} - {{ $client->getName() }}');
 

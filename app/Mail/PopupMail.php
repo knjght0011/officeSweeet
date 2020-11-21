@@ -48,9 +48,9 @@ class PopupMail extends Mailable
         });
         return $this->from($this->sender,'OfficeSweet: '.$this->sender)
             ->view('Emails.Customer.file' , ['body' => $this->body, 'token' => $this->token])
-            ->subject($this->subject)
-            ->attachData($this->attachment ,$this->type . ".pdf" , [
-                'mime' => 'application/pdf',
-            ]);
+            ->subject($this->subject);
+//            ->attachData($this->attachment ,$this->type . ".pdf" , [
+//                'mime' => 'application/pdf',
+//            ]);
     }
 }

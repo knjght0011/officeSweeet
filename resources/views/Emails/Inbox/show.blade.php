@@ -122,6 +122,7 @@
             </div>
         </div>
     </div>
+
     <button type="button" data-toggle='modal' data-dismiss="modal" href='#inbox-reply-modal'
             class="btn btn-outline-primary btn-lg btn-block">Reply
     </button>
