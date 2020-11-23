@@ -281,7 +281,7 @@
             // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
             $("#send-popup-compose-email-recipient-employee-tab").val(email);
             $("#send-popup-compose-email-subject-employee-tab").val('');
-            $("#send-popup-compose-email-body-employee-tab").val('');
+            employeeeditor.setData('');
             $('#send-popup-compose-email-employee-tab-modal').data('link_id', client_contact_id);
             //Set contact_id= null because employee don't have contact_id
             $('#send-popup-compose-email-employee-tab-modal').data('contact_id', null);

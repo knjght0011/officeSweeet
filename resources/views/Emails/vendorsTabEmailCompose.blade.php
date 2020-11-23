@@ -283,7 +283,7 @@
             // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
             $("#send-popup-compose-email-vendor-tab-recipient").val(email);
             $("#send-popup-compose-email-vendor-tab-subject").val('');
-            $("#send-popup-compose-email-vendor-tab-body").val('');
+            vendoreditor.setData('');
             $('#send-popup-compose-email-vendor-tab-modal').data('link_id', client_contact_id);
             $('#send-popup-compose-email-vendor-tab-modal').data('contact_id', client_contact_id);
             $('#send-popup-compose-email-vendor-tab-modal').data('recipient_id', recipient_id);

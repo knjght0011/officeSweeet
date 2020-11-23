@@ -18,7 +18,7 @@
                 <div class="tab-content" style="height: 100%">
                     <div class="row">
                         <div class="col-md-12" id="form_container">
-                            <form role="form" method="post" id="compose-mail-clients-tab">
+                            <form role="form" method="post" id="compose-mail-clients-tab" enctype="multipart/form-data">
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <div class="form-group error" style="color: #8c001a;font-weight: 400">&nbsp;
@@ -48,6 +48,11 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-12 form-group">
+                                        <div class="form-group form-group-default">
+                                            <label>Attachment</label>
+                                            <input type="file" id="send-popup-compose-email-client-tab-file" name="files[]" accept="application/pdf">
+{{--               disable upload multiple                             <input type="file" id="send-popup-compose-email-client-tab-file" name="files[]" accept="file_extension|image/*|media_type" multiple>--}}
+                                        </div>
                                         <button id="send-popup-compose-email-client-tab" type="button" class="btn btn-lg btn-default pull-right" >Send →</button>
                                     </div>
                                 </div>
@@ -281,7 +286,8 @@
             // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
             $("#send-popup-compose-email-recipient-client-tab").val(email);
             $("#send-popup-compose-email-subject-client-tab").val('');
-            $("#send-popup-compose-email-body-client-tab").val('');
+            clienteditor.setData('');
+            $("#send-popup-compose-email-client-tab-file").val('');
             $('#send-popup-compose-email-client-tab-modal').data('link_id', client_contact_id);
             $('#send-popup-compose-email-client-tab-modal').data('contact_id', client_contact_id);
             $('#send-popup-compose-email-client-tab-modal').data('recipient_id', recipient_id);
@@ -294,19 +300,25 @@
         $("#send-popup-compose-email-client-tab").unbind().click(function()
         {
             $("body").addClass("loading");
-            $data = {};
-            $data['_token'] = "{{ csrf_token() }}";
-
-            $data['contact_id'] = $('#send-popup-compose-email-client-tab-modal').data('contact_id');
-            $data['recipient_id'] = $('#send-popup-compose-email-client-tab-modal').data('recipient_id');
-            $data['contact_type'] = "Client";
-            $data['email'] = $('#send-popup-compose-email-recipient-client-tab').val();
-            $data['subject'] = $('#send-popup-compose-email-subject-client-tab').val();
-            $data['body'] = clienteditor.getData();
-            $data['link_id'] = $('#send-popup-compose-email-client-tab-modal').data('link_id');
-            $data['type'] = $('#send-popup-compose-email-client-tab-modal').data('type');
-            post = $.post("/Email/SendFromPopupCompose", $data);
-
+            const file_data = $('#send-popup-compose-email-client-tab-file')[0].files[0];
+            const formData = new FormData();
+            formData.append("_token", "{{ csrf_token() }}");
+            formData.append("contact_id",  $('#send-popup-compose-email-client-tab-modal').data('contact_id'));
+            formData.append("recipient_id",  $('#send-popup-compose-email-client-tab-modal').data('recipient_id'));
+            formData.append("contact_type",  "Client");
+            formData.append("email",  $('#send-popup-compose-email-recipient-client-tab').val());
+            formData.append("subject",  $('#send-popup-compose-email-subject-client-tab').val());
+            formData.append("body",  clienteditor.getData());
+            formData.append("link_id",  $('#send-popup-compose-email-client-tab-modal').data('link_id'));
+            formData.append("type",  $('#send-popup-compose-email-client-tab-modal').data('type'));
+            formData.append("files",  file_data);
+            post = $.ajax({
+                url: "/Email/SendFromPopupCompose",
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+            });
             post.done(function( data ) {
                 $("body").removeClass("loading");
                 switch(data['status']) {

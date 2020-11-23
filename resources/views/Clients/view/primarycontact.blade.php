@@ -306,10 +306,10 @@
             }
         } )
             .then( editor => {
-                window.clientvieweditor = editor;
+                window.clientviewprimarycontacteditor = editor;
 
                 $height = $('#client-view-primary-contact-compose-mail-body').height() + 200;
-                clientvieweditor.ui.view.editable.editableElement.style.height = $height + 'px';
+                clientviewprimarycontacteditor.ui.view.editable.editableElement.style.height = $height + 'px';
 
             } )
             .catch( err => {
@@ -338,7 +338,7 @@
             // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
             $("#client-view-primary-contact-compose-mail-recipient").val(email);
             $("#client-view-primary-contact-compose-mail-subject").val('');
-            $("#client-view-primary-contact-compose-mail-body").val('');
+            clientviewprimarycontacteditor.setData('');
             $('#client-view-primary-contact-compose-mail').data('link_id', client_contact_id);
             $('#client-view-primary-contact-compose-mail').data('contact_id', client_contact_id);
             $('#client-view-primary-contact-compose-mail').data('recipient_id', recipient_id);
@@ -356,7 +356,7 @@
             $data['contact_type'] = "Client";
             $data['email'] = $('#client-view-primary-contact-compose-mail-recipient').val();
             $data['subject'] = $('#client-view-primary-contact-compose-mail-subject').val();
-            $data['body'] = clientvieweditor.getData();
+            $data['body'] = clientviewprimarycontacteditor.getData();
             $data['link_id'] = $('#client-view-primary-contact-compose-mail').data('link_id');
             $data['type'] = $('#client-view-primary-contact-compose-mail').data('type');
             post = $.post("/Email/SendFromPopupCompose", $data);

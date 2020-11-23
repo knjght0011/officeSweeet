@@ -274,6 +274,6 @@ class Email extends Model
     }
 
     private function SendPopupMail(){
-        Mail::to($this->email)->send(new PopupMail($this->sender, $this->subject, $this->body, $this->type, $this->id, $this->token));
+        Mail::to($this->email)->send(new PopupMail($this->sender, $this->subject, $this->body,$this->Attachment(), $this->type, $this->id, $this->token));
     }
 }

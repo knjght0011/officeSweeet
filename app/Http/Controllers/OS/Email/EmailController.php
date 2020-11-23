@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\OS\Email;
 
+use App\Helpers\OS\FileStoreHelper;
 use App\Helpers\OS\Financial\ClientOverviewHelper;
 use App\Helpers\OS\NotificationHelper;
 use App\Http\Controllers\Controller;
@@ -41,6 +42,20 @@ class EmailController extends Controller
             'link_id' => Input::get('link_id'),
             'type' => Input::get('type'),
         );
+        $attachment = null;
+        if (Input::hasFile('files'))
+        {
+            $files = Input::file('files');
+            //save file to database
+            $dataSave = array(
+                'file' => 'data:' . FileStoreHelper::getMimeType($files) . ';base64,' . base64_encode(file_get_contents($files)),
+                'description' => "File Attach.",
+                'upload_user' => Auth::user()->id,
+            );
+            $savedFile = FileStoreHelper::StoreFileAndReturn($dataSave);
+            $attachment = base64_encode(file_get_contents($files));
+        }
+
         $contact = ClientContact::where('email', $data['email'])->first();
         //get contact_id from email if not sent
         if (!$data['contact_id']) {
@@ -65,6 +80,7 @@ class EmailController extends Controller
         $email->email = $data['email'];
         $email->linked_id = 1;
         $email->sender = Auth::user()->email;
+        $email->attachment = $attachment;
         $email->save();
         $email->SendPopup();
         //Get recipient_id

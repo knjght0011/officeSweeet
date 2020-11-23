@@ -525,7 +525,7 @@ $(document).ready(function() {
         // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
         $("#client-view-compose-mail-recipient").val(email);
         $("#client-view-compose-mail-subject").val('');
-        $("#client-view-compose-mail-body").val('');
+        clientvieweditor.setData('');
         $('#client-view-compose-mail').data('link_id', client_contact_id);
         $('#client-view-compose-mail').data('contact_id', client_contact_id);
         $('#client-view-compose-mail').data('recipient_id', recipient_id);
